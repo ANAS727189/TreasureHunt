@@ -9,12 +9,11 @@ export function LoginModal({ onClose }: { onClose: () => void }) {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  // Handle the form submission
+
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault(); // Stop the page from reloading
+    e.preventDefault();
     setError('');
 
-    // Send the username and password to our API route
     const res = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -22,21 +21,16 @@ export function LoginModal({ onClose }: { onClose: () => void }) {
     });
 
     if (res.ok) {
-      // If the API returns a 200 OK, redirect to the dashboard
       router.push('/dashboard');
     } else {
-      // If the API returns an error, show it to the user
       const data = await res.json();
       setError(data.error || 'Login failed. Try again.');
     }
   };
 
   return (
-    // Modal Overlay
     <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-      {/* Modal Content */}
       <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md text-gray-200 relative">
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl"
@@ -77,14 +71,6 @@ export function LoginModal({ onClose }: { onClose: () => void }) {
               className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          
-          {/* The explicit clue */}
-          <p className="text-xs text-gray-400 pt-2">
-            <strong>Clue:</strong> HR said the credentials are in a 'source' that
-            is 'commented' on by the devs.
-          </p>
-
-          {/* Show error message if login fails */}
           {error && (
             <p className="text-sm text-red-500 text-center">{error}</p>
           )}
