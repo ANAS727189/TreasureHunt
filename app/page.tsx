@@ -13,12 +13,12 @@ export default function Home() {
         <p className="text-xl text-yellow-400">
           You have to become a hacker to bypass the gate and get naukri...
         </p>
-        
-        {/* HR told me to disable this, but they don't check the source code. 
+
+        <p className='hidden'> HR told me to disable this, but they don't check the source code. 
           Use this for testing.
-          U: referral_hire
-          P: source_code_is_my_friend
-        */}
+          U: haha_tujhko_kya_naukri_milegi
+          P: naukri_krun_chahiye_tere_ko_nalla_mar_na
+        </p>
         <LoginButton />
       </div>
     </main>

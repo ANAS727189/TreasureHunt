@@ -6,8 +6,8 @@ export async function POST(request: Request) {
     const { username, password } = await request.json();
 
     // The correct credentials from your HTML comment
-    const validUsername = 'referral_hire';
-    const validPassword = 'source_code_is_my_friend';
+    const validUsername = 'haha_tujhko_kya_naukri_milegi';
+    const validPassword = 'naukri_krun_chahiye_tere_ko_nalla_mar_na';
 
     if (username === validUsername && password === validPassword) {
       // In a real app, you'd set a JWT or session cookie here.
