@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🚀 Kya Naukri Milegi? - The "Official" Repo
 
-First, run the development server:
+So... you found the GitHub repo. Clever.
+
+What, did you expect to find an `answers.txt` file here?
+
+Welcome, hacker.
+
+## 🧐 About This "Project"
+
+This project is a highly-complex, enterprise-grade, AI-driven, synergistic, Web 5.0 Applicant Tracking System (ATS)...
+
+...okay, I'm kidding.
+
+It's actually just a fun little treasure hunt game we cooked up to find the best talent out there. If you can crack the code and find the hidden password, you might just land yourself with the first prize...
+
+## ⚠️ WARNING: You Won't Get a Job Here
+
+Seriously. This is a game. The code is in this repo, but the answers aren't just lying around.
+
+Cloning this repo and running `npm install` will just make your laptop as slow as an employee's appraisal cycle. It won't get you the answers.
 
 ```bash
+# Don't waste your time doing this
+git clone https://github.com/ANAS727189/TreasureHunt
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Why? Did you think you could run it locally, check `console.log()`, and find the password? Nice try, champ. Not that easy.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features (AKA Traps)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+We designed this "application" specifically for smarty-pants people like you:
+  * **8 Ways to Fail:** Because the "You're Unemployable" screen is its own reward.
+  * **Only 1 Way to Win:** Good luck finding it.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+-----
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Now go, and find that job.
