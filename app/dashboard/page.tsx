@@ -25,6 +25,37 @@ export default function Dashboard() {
           first task wisely.
         </p>
 
+        {/* Footer Links - The Traps */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-center bg-gray-800 text-white p-4 rounded-lg mb-8">
+          <div className="flex items-center space-x-6">
+            <div>
+              <span className="text-gray-400">Company Value:</span>
+              <span className="ml-2 text-green-400">$4.20B</span>
+            </div>
+            <div>
+              <span className="text-gray-400">Growth:</span>
+              <span className="ml-2 text-green-400">+69%</span>
+            </div>
+          </div>
+          <div className="flex items-center space-x-8 mt-4 md:mt-0">
+            <Link 
+              href="/dashboard/demo-request"
+              className="text-blue-400 hover:text-blue-300 underline"
+            >
+              Request a Demo
+            </Link>
+            <Link 
+              href="/dashboard/annual-report"
+              className="text-blue-400 hover:text-blue-300 underline flex items-center"
+            >
+              Download Annual Report (PDF, 50MB)
+              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
         {/* --- THE 8 PATHS --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
