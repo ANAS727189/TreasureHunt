@@ -37,9 +37,17 @@ export function LoginModal({ onClose }: { onClose: () => void }) {
         >
           &times;
         </button>
-        <h2 className="text-3xl font-bold mb-6 text-center">
+        <h2 className="text-3xl font-bold mb-4 text-center">
           Applicant Portal
         </h2>
+        <div className="mb-6 text-center">
+          <p className="text-sm text-gray-400 italic border border-gray-700 p-3 rounded-lg bg-gray-800/50">
+            &quot;Beneath the surface of what you see,
+            <br />In layers of code, secrets run free.
+            <br />Inspect anywhere, the source holds truths you must detect.&quot;
+          </p>
+          <p className="text-xs text-gray-500 mt-2">- Dev who got lazy with security</p>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
