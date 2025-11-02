@@ -1,42 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/</loc>
     <lastmod>2025-11-03</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/dashboard</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/dashboard/stack</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/dashboard/stack/ai-matrix</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/dashboard/stack/directory</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/dashboard/stack/map-tool</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/memes/winner-tfg-1984.jpg</loc>
-    <lastmod>2025-11-03</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/tu-nalla-hi-marega</loc>
-    <lastmod>2025-11-03</lastmod>
+    <loc>https://kya-tumhe-naukri-milegi-i-dont-think-so.vercel.app/page-02</loc>
+    <lastmod>2025-01-01</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
