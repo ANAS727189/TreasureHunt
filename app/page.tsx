@@ -6,7 +6,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 bg-gray-900 text-white font-mono">
       <div className="text-center space-y-6 max-w-2xl">
         <Image
-          src="/This-Is-Fine-Dog-Fire-Meme-Sticker.webp"
+          src="/memes/This-Is-Fine-Dog-Fire-Meme-Sticker.webp"
           alt="This is fine dog"
           width={300}
           height={170}
@@ -25,7 +25,7 @@ export default function Home() {
         </p>
 
         <Image 
-          src="/Mai-Expert-Hu-popular-indian-meme-templates-300x169.webp" 
+          src="/memes/Mai-Expert-Hu-popular-indian-meme-templates-300x169.webp" 
           alt="Mai Expert Hu Meme"
           width={300}
           height={169}
