@@ -1,23 +1,19 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function HRComplaints() {
   const [playingFile, setPlayingFile] = useState<number | null>(null);
   const [puzzleProgress, setPuzzleProgress] = useState<string | null>(null);
 
-  // Check puzzle progress on component mount
+
   useEffect(() => {
-    // Only run on client side
     if (typeof window !== 'undefined') {
       const progress = localStorage.getItem('puzzleProgress');
       setPuzzleProgress(progress);
     }
   }, []);
 
-  // Define the list of audio files
   const audioFiles = [
     { id: 1, title: "Complaint about Brenda's yogurt in the fridge", duration: "3:00" },
     { id: 2, title: "Thermostat wars escalate to HR", duration: "3:00" },
@@ -32,26 +28,21 @@ export default function HRComplaints() {
     { id: 11, title: "Important security breach details", duration: "3:00" },
   ];
 
-  // Get the correct file name based on ID
   const getAudioFileName = (fileId: number) => {
     if (fileId === 11) return 'Audio-11.txt.m4a';
     return `Audio-${fileId}.m4a`;
   };
 
-  // Handle audio play
   const handlePlay = (fileId: number) => {
     setPlayingFile(fileId);
   };
 
-  // URLs for potential next steps - dynamically shown based on progress
   const getNavigationLinks = () => {
     const baseLinks = [
       { href: '/dashboard/stack/hr-values', text: 'Employee Value Framework' },
       { href: '/tu-nalla-hi-marega', text: 'HR Action Items' },
       { href: '/tu-nalla-hi-marega', text: 'Exit Interview Policy' },
     ];
-
-    // Only show HR Portal (the winning path) after GRIND puzzle is solved
     if (puzzleProgress === 'GRIND_SOLVED') {
       baseLinks.push(
         { href: '/dashboard/stack/hr-portal', text: 'HR Internal Portal' }
