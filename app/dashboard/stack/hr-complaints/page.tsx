@@ -1,20 +1,25 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HRComplaints() {
+  // Track which audio file is playing and which has error
   const [errorFile, setErrorFile] = useState<number | null>(null);
   const [playingFile, setPlayingFile] = useState<number | null>(null);
   const [puzzleProgress, setPuzzleProgress] = useState<string | null>(null);
-  const audioRefs = useRef<{ [key: number]: HTMLAudioElement | null }>({});
 
+  // Check puzzle progress on component mount
   useEffect(() => {
+    // Only run on client side
     if (typeof window !== 'undefined') {
       const progress = localStorage.getItem('puzzleProgress');
       setPuzzleProgress(progress);
     }
   }, []);
 
+  // Define the list of audio files
   const audioFiles = [
     { id: 1, title: "Complaint about Brenda's yogurt in the fridge", duration: "3:00" },
     { id: 2, title: "Thermostat wars escalate to HR", duration: "3:00" },
@@ -29,22 +34,30 @@ export default function HRComplaints() {
     { id: 11, title: "Important security breach details", duration: "3:00" },
   ];
 
+  // Get the correct file name based on ID
   const getAudioFileName = (fileId: number) => {
     if (fileId === 11) return 'Audio-11.txt.m4a';
     return `Audio-${fileId}.m4a`;
   };
 
+  // Handle audio play and error states
   const handlePlay = (fileId: number) => {
     setPlayingFile(fileId);
+    // Simulate error for file 11 after a short delay
+    if (fileId === 11) {
+      setTimeout(() => {
+        setErrorFile(11);
+      }, 500);
+    }
   };
 
-  const handleAudioClick = (fileId: number, e: React.MouseEvent) => {
-    if (fileId === 11 && errorFile !== 11) {
-      e.preventDefault();
+  const handleAudioError = (fileId: number) => {
+    if (fileId === 11) {
       setErrorFile(11);
     }
   };
 
+  // URLs for potential next steps - dynamically shown based on progress
   const getNavigationLinks = () => {
     const baseLinks = [
       { href: '/dashboard/stack/hr-values', text: 'Employee Value Framework' },
@@ -52,6 +65,7 @@ export default function HRComplaints() {
       { href: '/tu-nalla-hi-marega', text: 'Exit Interview Policy' },
     ];
 
+    // Only show HR Portal (the winning path) after GRIND puzzle is solved
     if (puzzleProgress === 'GRIND_SOLVED') {
       baseLinks.push(
         { href: '/dashboard/stack/hr-portal', text: 'HR Internal Portal' }
@@ -93,17 +107,17 @@ export default function HRComplaints() {
                         </div>
                       </div>
                     ) : (
-                      <div onClick={(e) => handleAudioClick(file.id, e)} className="cursor-pointer">
+                      <>
                         <audio
-                          ref={(el) => { audioRefs.current[file.id] = el; }}
                           onPlay={() => handlePlay(file.id)}
+                          onError={() => handleAudioError(file.id)}
                           controls
                           className="w-48"
                         >
                           <source src={`/audio/${getAudioFileName(file.id)}`} type="audio/mp4" />
                           Your browser does not support the audio element.
                         </audio>
-                      </div>
+                      </>
                     )}
                     <a
                       href={`/audio/${getAudioFileName(file.id)}`}
@@ -121,11 +135,12 @@ export default function HRComplaints() {
           </div>
         </div>
 
+        {/* Related Links Section */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Related HR Resources</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {getNavigationLinks().map((link: { href: string, text: string }, index: number) => (
-              <a
+              <Link
                 key={index}
                 href={link.href}
                 className="text-blue-600 hover:text-blue-800 hover:underline flex items-center"
@@ -134,7 +149,7 @@ export default function HRComplaints() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
                 {link.text}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
