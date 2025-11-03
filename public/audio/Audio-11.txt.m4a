@@ -1,0 +1,15 @@
+HR is monitoring our website, so I've hidden the next key on GitHub.
+I hid it in a place so full of spam that no one would ever look for a real secret there.
+The Riddle:
+Navigate to the GitHub repository for the most 'expressive' web framework 
+(Hint: it shares its name with a JavaScript runtime).
+During the great October spam flood known as Hacktoberfest, hundreds of junk PRs buried this repo. Your mission: find the ultimate meta-joke PR - a sarcastic protest so fed up with the spam that it literally tried to "delete the Readme" as a statement.
+How to find it:
+
+Go to the Pull Requests tab
+Filter by: Closed PRs
+Search for PRs from October (the Hacktoberfest month)
+Look for one with an obviously satirical title about deleting the readme
+Ignore the simple typo fixes and trivial spam—find the legendary one that became a symbol of the chaos
+
+The 4-digit code you need is the Pull Request number (#XXXX).

@@ -7,7 +7,7 @@ export default function TechStackPage() {
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header Section */}
         <section className="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-          <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-6 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Our Revolutionary Tech Stack
           </h1>
           <p className="text-gray-600 mb-4">

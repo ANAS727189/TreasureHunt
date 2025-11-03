@@ -199,7 +199,7 @@ export default function PolicyPage() {
 
       <button
         onClick={() => setUglyTheme(!uglyTheme)}
-        className={`fixed top-4 right-4 z-[9998] px-4 py-2 rounded-lg font-bold text-sm ${
+        className={`fixed top-4 right-4 z-9998 px-4 py-2 rounded-lg font-bold text-sm ${
           uglyTheme
             ? "bg-yellow-400 text-red-600 border-4 border-yellow-600 animate-pulse"
             : "bg-purple-600 text-yellow-300 border-2 border-pink-400"

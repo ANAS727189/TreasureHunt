@@ -227,12 +227,33 @@ export default function Dashboard() {
             </footer>
           </Link>
 
+          {/* Path 9: The "HR Files" Path */}
+          <Link
+            href="/dashboard/stack/hr-complaints"
+            className="flex flex-col h-full bg-yellow-50 hover:bg-yellow-100 rounded-lg shadow-sm border border-yellow-200 transform hover:-translate-y-1 transition-all overflow-hidden"
+          >
+            <Image src="/memes/jhethalala-angry.webp" alt="Jethalal Angry Boss Meme" width={400} height={200} className="w-full h-48 object-cover"/>
+            <div className="p-6 grow">
+              <h2 className="text-2xl font-semibold text-yellow-800 mb-2">
+                Anger of HR: Exit Interviews
+              </h2>
+              <p className="text-yellow-700">
+                They forgot to secure these audio files... 👀
+              </p>
+            </div>
+            <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-yellow-100">
+              <strong>Status:</strong> <span className="text-red-600 font-bold">CONFIDENTIAL</span><br/>
+              <strong>Last Update:</strong> Today<br/>
+              <strong>Files:</strong> 11 Audio Recordings
+            </footer>
+          </Link>
+
         </div> 
 
         {/* --- FOOTER TRAPS --- */}
         <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
           <p className="mb-2">
-            © 2024 Kya Naukri Milegi? Inc. All rights reserved. (No, not
+            © 2025 Kya Naukri Milegi? Inc. All rights reserved. (No, not
             really).
           </p>
           <div className="space-x-4">
