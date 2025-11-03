@@ -12,7 +12,6 @@ export default function HRPortal() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Check for the password variations
     const validPasswords = ['README', 'readme', 'Readme'];
     if (validPasswords.includes(password)) {
       router.push('/yay-i-got-the-job-in-MTV-haha');

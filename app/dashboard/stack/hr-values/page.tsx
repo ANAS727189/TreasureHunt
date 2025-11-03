@@ -1,5 +1,4 @@
 'use client';
-
 import Image from 'next/image';
 
 export default function HRValues() {
@@ -7,7 +6,6 @@ export default function HRValues() {
     <main className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-          {/* Hero Image and Title */}
           <div className="relative h-64">
             <Image
               src="/memes/nim-chimpsky.png"
@@ -22,7 +20,7 @@ export default function HRValues() {
             </div>
           </div>
 
-          {/* Main Content */}
+
           <div className="p-8">
             <div className="text-center mb-10">
               <p className="text-gray-600 text-lg">
@@ -33,7 +31,6 @@ export default function HRValues() {
             </div>
 
             <div className="space-y-12">
-              {/* Grit */}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
@@ -49,7 +46,6 @@ export default function HRValues() {
                 </div>
               </div>
 
-              {/* Respect */}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
@@ -65,7 +61,6 @@ export default function HRValues() {
                 </div>
               </div>
 
-              {/* Integrity */}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
@@ -81,7 +76,6 @@ export default function HRValues() {
                 </div>
               </div>
 
-              {/* Nimbleness */}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
@@ -97,7 +91,6 @@ export default function HRValues() {
                 </div>
               </div>
 
-              {/* Diversity */}
               <div className="flex items-start space-x-4">
                 <div className="shrink-0">
                   <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
@@ -114,7 +107,6 @@ export default function HRValues() {
               </div>
             </div>
 
-            {/* Hidden Hint */}
             <div className="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
               <p className="text-center text-sm text-gray-500">
                 Our internal systems are hosted on a domain that reflects these values.

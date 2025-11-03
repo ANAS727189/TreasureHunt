@@ -1,11 +1,8 @@
 'use client';
-
 import { useEffect } from 'react';
-import Image from 'next/image';
 
 export default function InternalServer() {
   useEffect(() => {
-    // Mark the GRIND puzzle as solved when they reach this page
     if (typeof window !== 'undefined') {
       localStorage.setItem('puzzleProgress', 'GRIND_SOLVED');
     }
@@ -15,7 +12,6 @@ export default function InternalServer() {
     <main className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-          {/* Terminal Header */}
           <div className="bg-gray-900 px-4 py-2 flex items-center space-x-2">
             <div className="w-3 h-3 rounded-full bg-red-500"></div>
             <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -23,7 +19,6 @@ export default function InternalServer() {
             <span className="ml-2 text-gray-400 text-sm">dev-notes.md</span>
           </div>
 
-          {/* Content */}
           <div className="p-6 space-y-6">
             <div className="border-b border-gray-200 pb-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Dev Team Notes</h1>

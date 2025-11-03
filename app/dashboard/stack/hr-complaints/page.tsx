@@ -2,24 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function HRComplaints() {
-  // Track which audio file is playing and which has error
-  const [errorFile, setErrorFile] = useState<number | null>(null);
-  const [playingFile, setPlayingFile] = useState<number | null>(null);
   const [puzzleProgress, setPuzzleProgress] = useState<string | null>(null);
 
-  // Check puzzle progress on component mount
   useEffect(() => {
-    // Only run on client side
     if (typeof window !== 'undefined') {
       const progress = localStorage.getItem('puzzleProgress');
       setPuzzleProgress(progress);
     }
   }, []);
 
-  // Define the list of audio files
   const audioFiles = [
     { id: 1, title: "Complaint about Brenda's yogurt in the fridge", duration: "3:00" },
     { id: 2, title: "Thermostat wars escalate to HR", duration: "3:00" },
@@ -34,30 +27,7 @@ export default function HRComplaints() {
     { id: 11, title: "Important security breach details", duration: "3:00" },
   ];
 
-  // Get the correct file name based on ID
-  const getAudioFileName = (fileId: number) => {
-    if (fileId === 11) return 'Audio-11.txt.m4a';
-    return `Audio-${fileId}.m4a`;
-  };
 
-  // Handle audio play and error states
-  const handlePlay = (fileId: number) => {
-    setPlayingFile(fileId);
-    // Simulate error for file 11 after a short delay
-    if (fileId === 11) {
-      setTimeout(() => {
-        setErrorFile(11);
-      }, 500);
-    }
-  };
-
-  const handleAudioError = (fileId: number) => {
-    if (fileId === 11) {
-      setErrorFile(11);
-    }
-  };
-
-  // URLs for potential next steps - dynamically shown based on progress
   const getNavigationLinks = () => {
     const baseLinks = [
       { href: '/dashboard/stack/hr-values', text: 'Employee Value Framework' },
@@ -65,7 +35,6 @@ export default function HRComplaints() {
       { href: '/tu-nalla-hi-marega', text: 'Exit Interview Policy' },
     ];
 
-    // Only show HR Portal (the winning path) after GRIND puzzle is solved
     if (puzzleProgress === 'GRIND_SOLVED') {
       baseLinks.push(
         { href: '/dashboard/stack/hr-portal', text: 'HR Internal Portal' }
@@ -97,37 +66,6 @@ export default function HRComplaints() {
                       Audio-{file.id}: {file.title}
                     </h3>
                     <p className="text-sm text-gray-500">Duration: {file.duration}</p>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    {file.id === 11 && errorFile === 11 ? (
-                      <div className="text-red-600 text-sm animate-pulse">
-                        [File Corrupted - Click to Download]
-                        <div className="text-xs text-gray-500 mt-1">
-                          Hint: The file extension seems... weird...🤔
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <audio
-                          onPlay={() => handlePlay(file.id)}
-                          onError={() => handleAudioError(file.id)}
-                          controls
-                          className="w-48"
-                        >
-                          <source src={`/audio/${getAudioFileName(file.id)}`} type="audio/mp4" />
-                          Your browser does not support the audio element.
-                        </audio>
-                      </>
-                    )}
-                    <a
-                      href={`/audio/${getAudioFileName(file.id)}`}
-                      download={getAudioFileName(file.id)}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                    </a>
                   </div>
                 </div>
               </div>
