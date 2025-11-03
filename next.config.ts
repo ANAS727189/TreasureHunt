@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
         destination: '/yay-i-got-the-job-in-MTV-haha', 
         permanent: false,
       },
+      {
+        source: '/6838-GRIND',
+        destination: '/dashboard/stack/hr-values/internal-server', 
+        permanent: false,
+      },
     ];
   },
 };
