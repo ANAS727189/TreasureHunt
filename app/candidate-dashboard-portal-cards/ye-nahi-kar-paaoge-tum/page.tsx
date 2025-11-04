@@ -42,7 +42,7 @@ const Page = () => {
       <div className="max-w-md w-full space-y-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-2">
+            <label htmlFor="name" className="block text-sm font-bold mb-2 text-gray-900">
               Name
             </label>
             <input
@@ -50,14 +50,14 @@ const Page = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
               placeholder="Enter your name"
               required
             />
           </div>
 
           <div>
-            <label htmlFor="code" className="block text-sm font-medium mb-2">
+            <label htmlFor="code" className="block text-sm font-bold mb-2 text-gray-900">
               Code
             </label>
             <input
@@ -65,7 +65,7 @@ const Page = () => {
               type="text"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-black"
               placeholder="Enter the code"
               required
             />
@@ -74,7 +74,7 @@ const Page = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 transition-colors"
+            className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 transition-colors font-semibold"
           >
             {isLoading ? 'Verifying...' : 'Submit'}
           </button>
