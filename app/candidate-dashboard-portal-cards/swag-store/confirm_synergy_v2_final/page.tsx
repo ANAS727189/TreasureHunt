@@ -12,16 +12,55 @@ export default function CringeBillingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentFailed, setPaymentFailed] = useState(false);
   const [showGaryCoin, setShowGaryCoin] = useState(false);
+  const [isValidating, setIsValidating] = useState(true);
+  const [isAccessGranted, setIsAccessGranted] = useState(false);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [paymentMode, setPaymentMode] = useState("cash");
 
   useEffect(() => {
-    if (!isUnlocked) {
-      alert("HEY! No cutting the line, chief. Solve the puzzle first.");
-      router.push("/candidate-dashboard-portal-cards/swag-store");
-    }
+    // Wait a bit for the context to load from localStorage
+    const timer = setTimeout(() => {
+      const readyToCheckout = localStorage.getItem("readyToCheckout");
+      const wasteLinksClicked = parseInt(
+        localStorage.getItem("wasteLinksClicked") || "0",
+        10
+      );
+      const storeUnlocked =
+        localStorage.getItem("swagStoreUnlocked") === "true";
+
+      console.log(
+        "Billing page validation. Context isUnlocked:",
+        isUnlocked,
+        "localStorage storeUnlocked:",
+        storeUnlocked,
+        "readyToCheckout:",
+        readyToCheckout,
+        "wasteLinksClicked:",
+        wasteLinksClicked
+      );
+
+      // Check both context and localStorage
+      const hasAccess =
+        (isUnlocked || storeUnlocked) &&
+        readyToCheckout === "true" &&
+        wasteLinksClicked >= 3;
+
+      if (!hasAccess) {
+        console.log("Access denied! Redirecting back to store.");
+        alert(
+          "HEY! No cutting the line, chief. Solve the puzzle first AND click 3 items!"
+        );
+        router.push("/candidate-dashboard-portal-cards/swag-store");
+      } else {
+        console.log("Access granted!");
+        setIsAccessGranted(true);
+      }
+      setIsValidating(false);
+    }, 100); // Small delay to let context load
+
+    return () => clearTimeout(timer);
   }, [isUnlocked, router]);
 
   const handlePayment = (e: React.FormEvent) => {
@@ -46,7 +85,20 @@ export default function CringeBillingPage() {
     }, 3000);
   };
 
-  if (!isUnlocked) {
+  if (isValidating) {
+    return (
+      <div className="bg-lime-200 min-h-screen p-8 font-['Comic_Sans_MS',_cursive] text-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-dashed border-purple-800 rounded-full animate-spin mx-auto mb-4"></div>
+          <h1 className="text-2xl font-bold text-purple-800">
+            Validating access...
+          </h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAccessGranted) {
     return (
       <div className="bg-lime-200 min-h-screen p-8 font-['Comic_Sans_MS',_cursive] text-black">
         <h1 className="text-4xl text-center">Redirecting...</h1>

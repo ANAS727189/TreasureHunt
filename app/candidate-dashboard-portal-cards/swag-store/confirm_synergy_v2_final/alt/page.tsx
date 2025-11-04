@@ -16,13 +16,22 @@ export default function GaryCoinMiner() {
   const [isWon, setIsWon] = useState(false);
   const [tryCount, setTryCount] = useState(0);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const [isValidating, setIsValidating] = useState(true);
 
   useEffect(() => {
-    if (!isPaymentSubmitted) {
-      alert("HEY! You need to submit the payment form first!");
-      router.push("/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final");
+    const paymentSubmitted =
+      typeof window !== "undefined"
+        ? localStorage.getItem("swagStorePaymentSubmitted")
+        : null;
+
+    if (paymentSubmitted !== "true") {
+      router.push(
+        "/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final"
+      );
+    } else {
+      setIsValidating(false);
     }
-  }, [isPaymentSubmitted, router]);
+  }, [router]);
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -83,10 +92,15 @@ export default function GaryCoinMiner() {
     }
   };
 
-  if (!isPaymentSubmitted) {
+  if (isValidating) {
     return (
       <div className="bg-black text-lime-400 min-h-screen p-4 font-mono flex items-center justify-center">
-        <h1 className="text-4xl text-center">Redirecting...</h1>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-dashed border-lime-400 rounded-full animate-spin mx-auto mb-4"></div>
+          <h1 className="text-2xl font-bold text-lime-400">
+            Validating access...
+          </h1>
+        </div>
       </div>
     );
   }
