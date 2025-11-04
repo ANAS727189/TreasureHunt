@@ -11,6 +11,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     const [bestAccuracy, setBestAccuracy] = useState(0); 
     const [message, setMessage] = useState("Think you're well-rounded? Prove it. Draw a perfect circle.");
     const [attempts, setAttempts] = useState(0);
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const requiredAccuracy = 94; 
     const idealRadius = 100;
@@ -24,6 +25,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleMouseDown = (e: React.MouseEvent) => {
+        if (isCompleted) return;
         const ctx = getCanvasContext();
         if (!ctx) return;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -36,7 +38,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isDrawing) return;
+        if (!isDrawing || isCompleted) return;
         const ctx = getCanvasContext();
         if (!ctx) return;
         const rect = ctx.canvas.getBoundingClientRect();
@@ -70,6 +72,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleMouseUp = () => {
+        if (!isDrawing) return;
         setIsDrawing(false);
         if (points.length < 10) return;
         setAttempts(prev => prev + 1);
@@ -82,13 +85,13 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
         const stdDev = Math.sqrt(distances.map(d => Math.pow(d - avgRadius, 2)).reduce((sum, v) => sum + v, 0) / distances.length);
         
         const accuracy = Math.max(0, 100 - (stdDev / avgRadius) * 100);
-        setCurrentAccuracy(accuracy);
 
         if (accuracy > bestAccuracy) {
             setBestAccuracy(accuracy);
         }
 
-        if (accuracy > requiredAccuracy) {
+        if (accuracy > requiredAccuracy && !isCompleted) {
+            setIsCompleted(true);
             setMessage(`Accuracy: ${accuracy.toFixed(2)}%. You did it! We're all so very impressed.`);
             setTimeout(onComplete, 2000);
         } else {
@@ -120,7 +123,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
                 ref={canvasRef}
                 width={canvasSize}
                 height={canvasSize}
-                className="bg-transparent border-2 border-gray-600 rounded-lg mx-auto cursor-crosshair"
+                className={`bg-transparent border-2 border-gray-600 rounded-lg mx-auto ${isCompleted ? 'cursor-not-allowed' : 'cursor-crosshair'}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
@@ -137,6 +140,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
     const [taunt, setTaunt] = useState("The promotion button is... elusive. Good luck.");
     const [isWindowOpen, setIsWindowOpen] = useState(false);
     const [hasScoredThisWindow, setHasScoredThisWindow] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const windowIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const windowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -149,6 +153,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     useEffect(() => {
+        if (isCompleted) return;
         windowIntervalRef.current = setInterval(() => {
             setIsWindowOpen(true);
             setHasScoredThisWindow(false);
@@ -166,18 +171,19 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
             if (windowIntervalRef.current) clearInterval(windowIntervalRef.current);
             if (windowTimeoutRef.current) clearTimeout(windowTimeoutRef.current);
         };
-    }, []);
+    }, [isCompleted]);
 
     useEffect(() => {
-        if (score >= 10) {
+        if (score >= 10 && !isCompleted) {
+            setIsCompleted(true);
             setTaunt("You've navigated the corporate labyrinth! Promotion secured.");
             const finalTimeout = setTimeout(() => onComplete(), 2000);
             return () => clearTimeout(finalTimeout);
         }
-    }, [score, onComplete]);
+    }, [score, onComplete, isCompleted]);
 
     const handleMouseEnter = () => {
-        if (isWindowOpen) return;
+        if (isWindowOpen || isCompleted) return;
         moveButton();
         const tauntsPool = [
             "Too slow!", "Try harder!", "Is that all?", "My grandma moves faster.",
@@ -190,6 +196,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleClick = (e: React.MouseEvent) => {
+        if (isCompleted) return;
         e.stopPropagation();
 
         if (isWindowOpen) { 
@@ -214,7 +221,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleMiss = () => {
-        if (!isWindowOpen) { 
+        if (!isWindowOpen || isCompleted) { 
             setMisses(m => m + 1);
             if (misses > 10) {
                 setTaunt("You're clicking everywhere but the button. A classic corporate strategy.");
@@ -232,7 +239,8 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
             <button 
                 onClick={handleClick}
                 onMouseEnter={handleMouseEnter}
-                className={`absolute font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${isWindowOpen ? 'bg-green-500 animate-pulse' : 'bg-blue-600'}`}
+                disabled={isCompleted}
+                className={`absolute font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 ${isWindowOpen ? 'bg-green-500 animate-pulse' : 'bg-blue-600'} ${isCompleted ? 'cursor-not-allowed' : ''}`}
                 style={{ top: position.top, left: position.left, transform: `translate(-50%, -50%)` }}
             >
                 Climb
@@ -242,27 +250,41 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 
+const isPrime = (num: number): boolean => {
+    if (num <= 1) return false;
+    if (num <= 3) return true;
+    if (num % 2 === 0 || num % 3 === 0) return false;
+    for (let i = 5; i * i <= num; i = i + 6) {
+        if (num % i === 0 || num % (i + 2) === 0) return false;
+    }
+    return true;
+};
+
+const allRules = [
+    { text: "Rule 1: Your password must be at least 12 characters. Because size does matter.", check: (p: string) => p.length >= 12 },
+    { text: "Rule 2: Must contain an uppercase letter. To show you're serious.", check: (p: string) => /[A-Z]/.test(p) },
+    { text: "Rule 3: Must contain a number. Let's not make it too easy.", check: (p: string) => /[0-9]/.test(p) },
+    { text: "Rule 4: A special character, for a little spice.", check: (p: string) => /[!@#$%^&*]/.test(p) },
+    { text: "Rule 5: The digits must add up to 25. We know you can count.", check: (p: string) => (p.match(/\d/g) || []).reduce((sum, digit) => sum + parseInt(digit), 0) === 25 },
+    { text: "Rule 6: A month of the year. Yes.. beleive me that's it.", check: (p: string) => /january|february|march|april|may|june|july|august|september|october|november|december/i.test(p) },
+    { text: "Rule 7: Got you!! A Roman numeral.", check: (p:string) => /[IVXLCDM]/.test(p)},
+    { text: "Rule 8: A lowercase letter. Don't shout at us.", check: (p: string) => /[a-z]/.test(p) },
+    { text: "Rule 9: No consecutive identical characters. Originality, please.", check: (p: string) => !/(.)\1/.test(p) },
+    { text: "Rule 10: A prime number. We value prime candidates.", check: (p: string) => {
+        const numbers = p.match(/\d+/g) || [];
+        return numbers.some(n => isPrime(parseInt(n, 10)));
+    } },
+    { text: "Rule 11: A fruit. Because... health.", check: (p: string) => /apple|banana|orange|grape|mango|pineapple|kiwi/i.test(p) },
+    { text: "Rule 12: The current year. Are you even paying attention?", check: (p: string) => p.includes("2025") },
+    { text: "Rule 13: Must be a Fibonacci number length. Naturally.", check: (p: string) => [13, 21, 34, 55].includes(p.length) },
+    { text: "Rule 14: A programming language. Show us your nerd cred.", check: (p: string) => /python|javascript|typescript|java|c#|c\+\+|go|rust|swift/i.test(p) },
+    { text: "Rule 15: And finally, the name of this Pokémon:", check: (p: string) => /snorlax/i.test(p) },
+];
+
 const PasswordChallenge = ({ onComplete }: { onComplete: () => void }) => {
     const [password, setPassword] = useState("");
     const [visibleRulesCount, setVisibleRulesCount] = useState(1);
-
-    const allRules = [
-        { text: "Rule 1: Your password must be at least 12 characters. Because size does matter.", check: (p: string) => p.length >= 12 },
-        { text: "Rule 2: Must contain an uppercase letter. To show you're serious.", check: (p: string) => /[A-Z]/.test(p) },
-        { text: "Rule 3: Must contain a number. Let's not make it too easy.", check: (p: string) => /[0-9]/.test(p) },
-        { text: "Rule 4: A special character, for a little spice.", check: (p: string) => /[!@#$%^&*]/.test(p) },
-        { text: "Rule 5: The digits must add up to 25. We know you can count.", check: (p: string) => (p.match(/\d/g) || []).reduce((sum, digit) => sum + parseInt(digit), 0) === 25 },
-        { text: "Rule 6: A month of the year. Yes.. beleive me that's it.", check: (p: string) => /january|february|march|april|may|june|july|august|september|october|november|december/i.test(p) },
-        { text: "Rule 7: Got you!! A Roman numeral.", check: (p:string) => /[IVXLCDM]/.test(p)},
-        { text: "Rule 8: A lowercase letter. Don't shout at us.", check: (p: string) => /[a-z]/.test(p) },
-        { text: "Rule 9: No consecutive identical characters. Originality, please.", check: (p: string) => !/(.)\1/.test(p) },
-        { text: "Rule 10: A prime number. We value prime candidates.", check: (p: string) => /\b(2|3|5|7|11|13|17|19|23|29|31|37|41|43|47)\b/.test(p) },
-        { text: "Rule 11: A fruit. Because... health.", check: (p: string) => /apple|banana|orange|grape|mango|pineapple/i.test(p) },
-        { text: "Rule 12: The current year. Are you even paying attention?", check: (p: string) => p.includes("2025") },
-        { text: "Rule 13: Must be a Fibonacci number length. Naturally.", check: (p: string) => [13, 21, 34, 55].includes(p.length) },
-        { text: "Rule 14: A programming language. Show us your nerd cred.", check: (p: string) => /python|javascript|typescript|java|c#|c\+\+|go|rust|swift/i.test(p) },
-        { text: "Rule 15: And finally, the name of this Pokémon:", check: (p: string) => /snorlax/i.test(p) },
-    ];
+    const [isCompleted, setIsCompleted] = useState(false);
 
     const [rules, setRules] = useState(allRules.map(rule => ({ ...rule, satisfied: false })));
     const [showPokemon, setShowPokemon] = useState(false);
@@ -280,10 +302,11 @@ const PasswordChallenge = ({ onComplete }: { onComplete: () => void }) => {
         if (visibleRulesCount === allRules.length) {
             setShowPokemon(true);
         }
-    }, [password, visibleRulesCount, allRules]);
+    }, [password, visibleRulesCount]);
 
     const handleSubmit = () => {
-        if (allRulesSatisfied) {
+        if (allRulesSatisfied && !isCompleted) {
+            setIsCompleted(true);
             onComplete();
         }
     };
@@ -301,6 +324,7 @@ const PasswordChallenge = ({ onComplete }: { onComplete: () => void }) => {
                 type="text"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isCompleted}
                 className="w-full p-2 rounded bg-gray-800 border border-gray-600 text-white text-center font-mono"
                 placeholder="Your pathetic attempt at a password goes here"
             />
@@ -316,7 +340,7 @@ const PasswordChallenge = ({ onComplete }: { onComplete: () => void }) => {
             {allRulesSatisfied && (
                  <div className="mt-6">
                     <p className="text-green-400 font-bold text-lg mb-4">Incredible. You actually did it. We're... impressed?</p>
-                    <button onClick={handleSubmit} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-110">
+                    <button onClick={handleSubmit} disabled={isCompleted} className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-110">
                         Fine, Set Password
                     </button>
                 </div>
@@ -331,6 +355,9 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
     "Our marketing team made a 'tiny' mistake. Find it. We're watching."
   );
   const [wrongClicks, setWrongClicks] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const pixelPosition = useRef<{x: number, y: number} | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -343,25 +370,32 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
     canvas.width = logoWidth;
     canvas.height = logoHeight;
 
-    const pixelX = Math.floor(Math.random() * (logoWidth - 6)) + 3;
-    const pixelY = Math.floor(Math.random() * (logoHeight - 6)) + 3;
+    if (pixelPosition.current === null) {
+        pixelPosition.current = {
+            x: Math.floor(Math.random() * (logoWidth - 8)) + 4,
+            y: Math.floor(Math.random() * (logoHeight - 8)) + 4,
+        };
+    }
+    const { x: pixelX, y: pixelY } = pixelPosition.current;
 
     const originalColor = "#4A90E2";
-    const diffColor = "#4A90E3";
+    const diffColor = "#4A90E8";
 
     ctx.fillStyle = originalColor;
     ctx.fillRect(0, 0, logoWidth, logoHeight);
     ctx.fillStyle = diffColor;
-    ctx.fillRect(pixelX, pixelY, 1, 1);
-
+    ctx.fillRect(pixelX, pixelY, 2, 2);
+    console.log(pixelX, pixelY);
     const handleClick = (event: MouseEvent) => {
+      if (isCompleted) return;
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
-      if (x >= pixelX - 2 && x <= pixelX + 2 && y >= pixelY - 2 && y <= pixelY + 2) {
+      if (x >= pixelX-1 && x <= pixelX + 1 && y >= pixelY-1 && y <= pixelY + 1) {
+        setIsCompleted(true);
         setMessage(`You found it after only ${wrongClicks + 1} attempts! We're... moderately impressed.`);
-        setTimeout(onComplete, 1500);
+        timeoutRef.current = setTimeout(onComplete, 1500);
       } else {
         setWrongClicks(c => c + 1);
         const taunts = [
@@ -377,9 +411,9 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
 
         let newMessage = taunts[Math.floor(Math.random() * taunts.length)];
 
-        if (wrongClicks > 10) {
+        if (wrongClicks + 1 > 10) {
             newMessage = "Just click everywhere, maybe you'll get lucky. Or not.";
-        } else if (wrongClicks > 5) {
+        } else if (wrongClicks + 1 > 5) {
             newMessage = `You've made ${wrongClicks + 1} wrong clicks. We're starting a betting pool in the office.`;
         }
         setMessage(newMessage);
@@ -387,8 +421,13 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     canvas.addEventListener("click", handleClick);
-    return () => canvas.removeEventListener("click", handleClick);
-  }, [onComplete, wrongClicks]);
+    return () => {
+        canvas.removeEventListener("click", handleClick);
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    };
+  }, [onComplete, wrongClicks, isCompleted]);
 
   return (
     <div className="text-center">
@@ -413,27 +452,28 @@ export default function InternshipPage() {
   const [stage, setStage] = useState(0);
   const router = useRouter();
 
-  const advanceStage = () => {
+  const advanceStage = React.useCallback(() => {
     setStage((prev) => prev + 1);
-  };
+  }, []);
 
   useEffect(() => {
     if (stage === 4) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         router.push("/candidate-dashboard-portal-cards/internship/yay-i-got-the-job-in-MTV-haha");
       }, 2000);
+      return () => clearTimeout(timeoutId);
     }
   }, [stage, router]);
 
   const challenges = [
-    <DrawCircleChallenge onComplete={advanceStage} />,
-    <LadderChallenge onComplete={advanceStage} />,
-    <PasswordChallenge onComplete={advanceStage} />,
-    <PixelPerfectChallenge onComplete={advanceStage} />,
+    <DrawCircleChallenge onComplete={() => stage === 0 && advanceStage()} />,
+    <LadderChallenge onComplete={() => stage === 1 && advanceStage()} />,
+    <PasswordChallenge onComplete={() => stage === 2 && advanceStage()} />,
+    <PixelPerfectChallenge onComplete={() => stage === 3 && advanceStage()} />,
   ];
 
   return (
-    <main className="min-h-screen bg-linear-to-br from-gray-900 to-slate-800 text-white p-4 sm:p-8 md:p-12 font-sans">
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 text-white p-4 sm:p-8 md:p-12 font-sans">
       <div className="text-center space-y-6 max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-200 sm:text-5xl md:text-6xl">Unpaid Internship Application</h1>
         <p className="mt-6 text-lg leading-8 text-gray-400">Prove your worth. Complete the tasks.</p>
