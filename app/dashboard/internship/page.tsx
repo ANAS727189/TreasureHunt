@@ -357,6 +357,8 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
   );
   const [wrongClicks, setWrongClicks] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+  const pixelPosition = useRef<{x: number, y: number} | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -369,27 +371,32 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
     canvas.width = logoWidth;
     canvas.height = logoHeight;
 
-    const pixelX = Math.floor(Math.random() * (logoWidth - 6)) + 3;
-    const pixelY = Math.floor(Math.random() * (logoHeight - 6)) + 3;
+    if (pixelPosition.current === null) {
+        pixelPosition.current = {
+            x: Math.floor(Math.random() * (logoWidth - 8)) + 4,
+            y: Math.floor(Math.random() * (logoHeight - 8)) + 4,
+        };
+    }
+    const { x: pixelX, y: pixelY } = pixelPosition.current;
 
     const originalColor = "#4A90E2";
-    const diffColor = "#4A90E3";
+    const diffColor = "#4A90E8";
 
     ctx.fillStyle = originalColor;
     ctx.fillRect(0, 0, logoWidth, logoHeight);
     ctx.fillStyle = diffColor;
-    ctx.fillRect(pixelX, pixelY, 1, 1);
-
+    ctx.fillRect(pixelX, pixelY, 2, 2);
+    console.log(pixelX, pixelY);
     const handleClick = (event: MouseEvent) => {
       if (isCompleted) return;
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
-      if (x >= pixelX - 2 && x <= pixelX + 2 && y >= pixelY - 2 && y <= pixelY + 2) {
+      if (x >= pixelX - 1 && x <= pixelX + 1 && y >= pixelY - 1 && y <= pixelY + 1) {
         setIsCompleted(true);
         setMessage(`You found it after only ${wrongClicks + 1} attempts! We're... moderately impressed.`);
-        setTimeout(onComplete, 1500);
+        timeoutRef.current = setTimeout(onComplete, 1500);
       } else {
         setWrongClicks(c => c + 1);
         const taunts = [
@@ -405,9 +412,9 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
 
         let newMessage = taunts[Math.floor(Math.random() * taunts.length)];
 
-        if (wrongClicks > 10) {
+        if (wrongClicks + 1 > 10) {
             newMessage = "Just click everywhere, maybe you'll get lucky. Or not.";
-        } else if (wrongClicks > 5) {
+        } else if (wrongClicks + 1 > 5) {
             newMessage = `You've made ${wrongClicks + 1} wrong clicks. We're starting a betting pool in the office.`;
         }
         setMessage(newMessage);
@@ -415,7 +422,12 @@ const PixelPerfectChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     canvas.addEventListener("click", handleClick);
-    return () => canvas.removeEventListener("click", handleClick);
+    return () => {
+        canvas.removeEventListener("click", handleClick);
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    };
   }, [onComplete, wrongClicks, isCompleted]);
 
   return (
