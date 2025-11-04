@@ -1,48 +1,35 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
- async redirects() {
-    const trapPages = [
-      '/page-01',
-      '/page-02',
-      '/page-03',
-      '/page-04',
-      '/page-05',
-      '/page-06',
-      '/page-07',
-      '/page-08',
-      '/page-09',
-      '/page-10',
-      '/page-11',
-      '/page-12',
-      '/page-13',
-      '/page-14',
-      '/page-15',
-      '/page-16',
-      '/page-18',
-      '/page-19',
-      '/page-20',
-    ];
+    async redirects() {
+      
+    const trapPages = Array.from({ length: 200 }, (_, i) => {
+      const index = i + 1;
+      if (index === 129) return null;
+      return `/page-${String(index).padStart(2, "0")}`;
+    }).filter(Boolean) as string[];
+
     const trapRedirects = trapPages.map((trap) => ({
       source: trap,
       destination: '/tu-nalla-hi-marega',
       permanent: false,
     }));
 
-    return [
-      ...trapRedirects,
-      {
-        source: '/page-17',
-        destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha?path=stack-4', 
-        permanent: false,
-      },
-      {
-        source: '/6838-GRIND',
-        destination: '/candidate-dashboard-portal-cards/angry-hr-complaint/hr-values/internal-server', 
-        permanent: false,
-      },
-    ];
-  },
+  return [
+    ...trapRedirects,
+    {
+      source: '/page-129',
+      destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha?path=stack-4',
+      permanent: false,
+    },
+    {
+      source: '/6838-GRIND',
+      destination: '/candidate-dashboard-portal-cards/angry-hr-complaint/hr-values/internal-server',
+      permanent: false,
+    },
+  ];
+},
+
 };
 
 export default nextConfig;
