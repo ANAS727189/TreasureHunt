@@ -420,7 +420,7 @@ export default function InternshipPage() {
   useEffect(() => {
     if (stage === 4) {
       setTimeout(() => {
-        router.push("/yay-i-got-the-job-in-MTV-haha");
+        router.push("/candidate-dashboard-portal-cards/internship/yay-i-got-the-job-in-MTV-haha");
       }, 2000);
     }
   }, [stage, router]);
@@ -433,7 +433,7 @@ export default function InternshipPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 text-white p-4 sm:p-8 md:p-12 font-sans">
+    <main className="min-h-screen bg-linear-to-br from-gray-900 to-slate-800 text-white p-4 sm:p-8 md:p-12 font-sans">
       <div className="text-center space-y-6 max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-200 sm:text-5xl md:text-6xl">Unpaid Internship Application</h1>
         <p className="mt-6 text-lg leading-8 text-gray-400">Prove your worth. Complete the tasks.</p>
