@@ -105,18 +105,33 @@ export default function CringeSwagStore() {
   const { isUnlocked } = useSwagStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
+  const [clickedWasteLinks, setClickedWasteLinks] = useState<number>(0);
+  const [showMessage, setShowMessage] = useState(false);
+
+  // Load click count from localStorage on mount
+  useEffect(() => {
+    const savedCount = localStorage.getItem("wasteLinksClicked");
+    if (savedCount) {
+      const count = parseInt(savedCount, 10);
+      setClickedWasteLinks(count);
+    }
+  }, []);
+
+  // Save click count to localStorage whenever it changes
+  useEffect(() => {
+    if (clickedWasteLinks > 0) {
+      localStorage.setItem("wasteLinksClicked", clickedWasteLinks.toString());
+    }
+  }, [clickedWasteLinks]);
 
   useEffect(() => {
     let _showButton = false;
-    
+
     Object.defineProperty(window, "showButton", {
       get: () => _showButton,
       set: (value) => {
         _showButton = value;
         if (value === true) {
-          console.log(
-            "Access Granted: 'showButton' protocol initiated. Button is visible."
-          );
           setIsButtonVisible(true);
         }
       },
@@ -128,8 +143,59 @@ export default function CringeSwagStore() {
     };
   }, []);
 
+  const wasteLinks = [
+    "https://en.wikipedia.org/wiki/Potato",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "https://en.wikipedia.org/wiki/List_of_lists_of_lists",
+    "https://www.google.com/search?q=why+do+cats+knock+things+over",
+    "https://www.youtube.com/watch?v=gSXm0f0HYpc",
+    "https://www.google.com/search?q=how+to+breathe+manually",
+    "https://en.wikipedia.org/wiki/Toilet_paper_orientation",
+    "https://www.youtube.com/watch?v=_VuJA-VQRcY",
+    "https://www.google.com/search?q=do+penguins+have+knees",
+    "https://en.wikipedia.org/wiki/Banana_equivalent_dose",
+    "https://www.google.com/search?q=why+is+the+sky+blue",
+    "https://www.youtube.com/watch?v=NGuXbpNbhCE",
+    "https://en.wikipedia.org/wiki/List_of_fictional_colors",
+    "https://www.google.com/search?q=can+you+eat+clouds",
+  ];
+
+  const handleProductClick = (productId: number) => {
+    if (!isUnlocked) return;
+
+    // Product 6 (Desk Zen Garden) is the correct one
+    if (productId === 6) {
+      if (clickedWasteLinks >= 3) {
+        // Set a flag that user is ready to checkout
+        localStorage.setItem("readyToCheckout", "true");
+        window.location.href =
+          "/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final";
+      } else {
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 3000);
+      }
+    } else {
+      const randomLink =
+        wasteLinks[Math.floor(Math.random() * wasteLinks.length)];
+      window.open(randomLink, "_blank");
+      setClickedWasteLinks((prev) => {
+        const newCount = prev + 1;
+        return newCount;
+      });
+    }
+  };
+
   return (
     <>
+      {showMessage && (
+        <div className="fixed top-10 left-1/2 transform -translate-x-1/2 z-50 bg-red-600 text-white font-bold py-4 px-8 rounded-lg shadow-2xl border-4 border-yellow-300 animate-bounce">
+          <p className="text-xl">
+            🚫 NOT YET! Click {3 - clickedWasteLinks} more item
+            {3 - clickedWasteLinks !== 1 ? "s" : ""} first! 🚫
+          </p>
+        </div>
+      )}
+
       <div className="bg-lime-200 min-h-screen p-4 font-['Comic_Sans_MS',_cursive] text-black">
         <header className="text-center mb-6 p-4 bg-yellow-200 rounded-lg shadow-md border-4 border-dashed border-red-500">
           <h1 className="text-6xl font-extrabold text-purple-800 mb-2 animate-pulse">
@@ -138,6 +204,16 @@ export default function CringeSwagStore() {
           <p className="text-lg text-blue-700 font-bold">
             Buy Our Stuff! It's Cool! We Promise!
           </p>
+          {isUnlocked && clickedWasteLinks > 0 && (
+            <div className="mt-4 bg-green-300 border-2 border-green-600 rounded p-2">
+              <p className="text-sm font-bold text-green-800">
+                🎯 Progress: {clickedWasteLinks}/3 items explored!
+                {clickedWasteLinks >= 3
+                  ? " ✅ You can now buy the Desk Zen Garden!"
+                  : ""}
+              </p>
+            </div>
+          )}
         </header>
 
         <div className="w-full bg-blue-400 border-y-4 border-blue-800 overflow-hidden my-6">
@@ -181,7 +257,11 @@ export default function CringeSwagStore() {
           {cringeProducts.map((product, index) => (
             <div
               key={product.id}
-              className={`bg-white rounded-lg shadow-lg border-2 border-purple-400 transform transition-all duration-300 ${
+              className={`bg-white rounded-lg shadow-lg border-2 transform transition-all duration-300 ${
+                product.id === 6 && clickedWasteLinks >= 3 && isUnlocked
+                  ? "border-green-500 border-4 ring-4 ring-green-300 animate-pulse"
+                  : "border-purple-400"
+              } ${
                 !isUnlocked
                   ? `hover:scale-105 hover:rotate-${
                       index % 2 === 0 ? "2" : "-2"
@@ -213,12 +293,18 @@ export default function CringeSwagStore() {
                   }}
                 />
                 {isUnlocked ? (
-                  <Link
-                    href="/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final"
-                    className="w-full text-center bg-green-500 text-white font-bold py-2 px-4 rounded-lg text-lg hover:bg-green-600 animate-pulse"
+                  <button
+                    onClick={() => handleProductClick(product.id)}
+                    className={`w-full text-center font-bold py-2 px-4 rounded-lg text-lg cursor-pointer transition-all ${
+                      product.id === 6 && clickedWasteLinks >= 3
+                        ? "bg-gradient-to-r from-green-400 to-green-600 text-white animate-pulse hover:from-green-500 hover:to-green-700"
+                        : "bg-green-500 text-white hover:bg-green-600 animate-pulse"
+                    }`}
                   >
-                    BUY NOW!!
-                  </Link>
+                    {product.id === 6 && clickedWasteLinks >= 3
+                      ? "✅ CHECKOUT NOW! ✅"
+                      : "BUY NOW!!"}
+                  </button>
                 ) : (
                   <div className="text-xs mt-2 pt-2 border-t border-gray-200">
                     <strong className="text-red-600">Status:</strong> SOLD OUT
@@ -324,7 +410,7 @@ function HuntModal({
           secret codes to unlock it. Find the codes hidden around the site!
         </p>
         <p className="text-sm text-blue-700 mb-4">
-          <b>HINT:</b> Gary left 3 clue words hidden in the item descriptions!
+          <b>HINT:</b> Gary left 3 clue words hidden in the item view page!
         </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="code" className="block text-gray-700 font-bold mb-2">
