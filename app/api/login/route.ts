@@ -7,7 +7,19 @@ export async function POST(request: Request) {
     const validPassword = 'naukri_krun_chahiye_tere_ko_nalla_mar_na';
 
     if (username === validUsername && password === validPassword) {
-      return NextResponse.json({ message: 'Login successful!' }, { status: 200 });
+      const response = NextResponse.json(
+        { message: 'Login successful!' },
+        { status: 200 }
+      );
+      response.cookies.set({
+        name: 'auth_token',
+        value: 'authenticated',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 60 * 60
+      });
+      return response;
     } else {
       return NextResponse.json(
         { error: 'Invalid credentials. HR is watching.' },

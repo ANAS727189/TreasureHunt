@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  // Get the authorization header
   const authToken = request.headers.get('x-auth-token');
-    // Parse the request body
   const body = await request.json();
   const { name, email, why_you, referral_code } = body;
 
@@ -24,12 +22,10 @@ export async function POST(request: NextRequest) {
       { status: 401 }
     );
   }
-
-  // If both checks pass, redirect to success page
   return NextResponse.json(
     { 
       message: "Congratulations! You've proven yourself worthy!",
-      redirect: '/yay-i-got-the-job-in-MTV-haha'
+      redirect: '/candidate-dashboard-portal-cards/apply/yay-i-got-the-job-in-MTV-haha'
     },
     { status: 200 }
   );

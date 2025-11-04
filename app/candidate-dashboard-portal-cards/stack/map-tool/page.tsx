@@ -12,7 +12,7 @@ export default function MapToolPage() {
     e.preventDefault();
     if (code === '1984') {
       localStorage.setItem('mapToolAccess', 'granted');
-      router.push('/dashboard/stack/map-tool-unlocked');
+      router.push('/candidate-dashboard-portal-cards/stack/map-tool-unlocked');
     } else {
       setError('Invalid override code. Access denied.');
       setCode('');

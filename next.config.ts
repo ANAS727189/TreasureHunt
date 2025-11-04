@@ -33,12 +33,12 @@ const nextConfig: NextConfig = {
       ...trapRedirects,
       {
         source: '/page-17',
-        destination: '/yay-i-got-the-job-in-MTV-haha', 
+        destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha', 
         permanent: false,
       },
       {
         source: '/6838-GRIND',
-        destination: '/dashboard/stack/hr-values/internal-server', 
+        destination: '/candidate-dashboard-portal-cards/angry-hr-complaint/hr-values/internal-server', 
         permanent: false,
       },
     ];
