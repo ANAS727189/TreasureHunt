@@ -288,7 +288,6 @@ function HuntModal({
     "pointer.variously.postage",
     "shampoos.lyrics.kebab",
     "juror.jetliner.crackled",
-    "excavate.texted.healthier",
     "secretly.hurray.whistling",
     "agreement.drivers.toned",
     "rental.tests.confetti",
