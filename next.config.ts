@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
       ...trapRedirects,
       {
         source: '/page-17',
-        destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha', 
+        destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha?path=stack-4', 
         permanent: false,
       },
       {

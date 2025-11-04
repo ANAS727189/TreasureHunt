@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 
 export default function MapToolUnlocked() {
   const router = useRouter();
-
-  // Your check to make sure they solved the first part (the '1984' code)
   useEffect(() => {
     const hasAccess = localStorage.getItem('mapToolAccess') === 'granted';
     if (!hasAccess) {
@@ -16,8 +14,6 @@ export default function MapToolUnlocked() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100 p-8 text-center">
-      
-      {/* 1. THE FAKE LOADER (The "Trap") */}
       <div className="space-y-4">
         <div
           className="mx-auto h-16 w-16 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"
@@ -34,21 +30,11 @@ export default function MapToolUnlocked() {
         <p className="pt-4 text-sm text-gray-500">
           (This legacy tool is *really* old. Thanks for your patience.)
         </p>
-
-        {/*
-          ******************************************************
-          * CHANGE #1: A new VISIBLE hint to find the logs    *
-          ******************************************************
-          This small, visible hint encourages the user to
-          be curious and search the page (e.g., with Ctrl+A).
-        */}
         <p className="pt-2 text-sm text-gray-400">
           Hint: A good applicant always checks the system logs.
         </p>
 
       </div>
-
-      {/* 2. THE HIDDEN HINT (The "Aha!" Moment) */}
       <div className="absolute bottom-0 left-0 w-full p-8">
         <pre
           className="
@@ -62,13 +48,6 @@ export default function MapToolUnlocked() {
           Date: [REDACTED]
           User: [REDACTED]
           Status: ERROR_LOAD_FAILED
-          
-          {/*
-            ******************************************************
-            * CHANGE #2: A more EXPLICIT hidden clue          *
-            ******************************************************
-            This now tells a non-developer EXACTLY what to do.
-          */}
           Comments: This tool is a piece of junk. It never loads. 
           HR just uses it as a test. The real company directory 
           isn't a tool, it's just a file.

@@ -2,6 +2,7 @@
 
 import { useState, FormEvent, useEffect } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 function WinnerPage() {
@@ -9,6 +10,8 @@ function WinnerPage() {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = searchParams.get('path');
 
   useEffect(() => {
     // Check if user has completed the required puzzles
@@ -30,7 +33,10 @@ function WinnerPage() {
     const res = await fetch('/api/submit-winner', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim() }),
+      body: JSON.stringify({ 
+        name: name.trim(),
+        path: path || 'unknown'
+      }),
     });
 
     const data = await res.json();
