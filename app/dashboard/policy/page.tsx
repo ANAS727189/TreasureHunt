@@ -192,7 +192,7 @@ export default function PolicyPage() {
         color: uglyTheme ? "#04ff00ff" : undefined,
       }}
       className={`p-10 ${
-        uglyTheme ? "" : "bg-foreground"
+        uglyTheme ? "" : "bg-background"
       } min-h-screen relative`}
     >
       <title>Mandatory Compliance Training (Rev. 2002)</title>
@@ -310,7 +310,7 @@ export default function PolicyPage() {
       </nav>
 
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-gray-900 my-8">
+        <h1 className="text-4xl font-bold text-center text-foreground my-8">
           🏢 LEGAL POLICIES (HR Compliance ) 🏢
         </h1>
 
