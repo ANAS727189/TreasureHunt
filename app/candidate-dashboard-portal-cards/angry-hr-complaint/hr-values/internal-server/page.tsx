@@ -2,11 +2,26 @@
 import { useEffect } from 'react';
 
 export default function InternalServer() {
+  
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('puzzleProgress', 'GRIND_SOLVED');
-    }
-  }, []);
+  if (typeof window === 'undefined') return;
+
+  const KEY = 'puzzleProgress';
+  const EXPIRE_MS = 30 * 60 * 1000; // 30 min
+
+  const now = Date.now();
+  const stored = localStorage.getItem(KEY);
+  const storedAt = localStorage.getItem(KEY + '_ts');
+
+  if (stored && storedAt && now - Number(storedAt) > EXPIRE_MS) {
+    localStorage.removeItem(KEY);
+    localStorage.removeItem(KEY + '_ts');
+  }
+
+  localStorage.setItem(KEY, 'GRIND_SOLVED');
+  localStorage.setItem(KEY + '_ts', String(now));
+}, []);
+
 
   return (
     <main className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
