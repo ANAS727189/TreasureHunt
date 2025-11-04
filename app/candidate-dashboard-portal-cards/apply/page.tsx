@@ -1,14 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ApplyPage() {
     const [loading, setLoading] = useState(false);
+    const [showHint, setShowHint] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         why_you: ''
     });
+    useEffect(() => {
+        const hintTimer = setTimeout(() => {
+            setShowHint(true); 
+        }, 30000); 
+        return () => clearTimeout(hintTimer);
+    }, []); 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,11 +32,10 @@ export default function ApplyPage() {
 
         if (!response.ok) {
             const error = await response.json();
-            console.error('Application failed:', error);
+            console.error('Application failed:', error); 
             setFormData({ name: '', email: '', why_you: '' });
             setLoading(false);
         } else {
-            // If successful, get the response and redirect
             const data = await response.json();
             if (data.redirect) {
             window.location.href = data.redirect;
@@ -58,7 +64,7 @@ export default function ApplyPage() {
                 type="text"
                 id="name"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 />
@@ -103,6 +109,14 @@ export default function ApplyPage() {
                 'Submit Application'
                 )}
             </button>
+            {showHint && (
+                <p className="mt-4 text-center text-sm text-gray-600">
+                    <span className="font-bold"> STUCK?</span>A real developer knows where to look.
+                    <br />
+                    What you see is a <strong>lie</strong>... what you don't see tells the truth.
+                </p>
+            )}
+            
             </form>
         </div>
         </main>

@@ -107,13 +107,16 @@ export default function HRValues() {
               </div>
             </div>
 
-            <div className="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-center text-sm text-gray-500">
-                Our internal systems are hosted on a domain that reflects these values.
-                Some say it takes GRIT (or was it *****?) and exactly **** no. of steps to reach there.
-                Can you figure out what it is?
-              </p>
-            </div>
+            <div className="mt-12 p-6 bg-gray-50 rounded-lg border border-gray-200 font-mono text-sm text-gray-600 text-left">
+            <p className="text-center font-sans text-xs text-gray-500 mb-3">
+              [ A developer&apos;s note found in the page comments ]
+            </p>
+            <p className="text-green-700">// HR wanted a 'domain that reflects values'. Stupid.</p>
+            <p className="text-green-700">// The real internal path is structured like a JIRA ticket.</p>
+            <p className="text-green-700">// Key 1: That joke PR's number (you know, #****).</p>
+            <p className="text-green-700">// Key 2: The acronym we're all forced to GRIT OR '****' for.</p>
+            <p className="text-green-700">// Just connect them. You'll figure it out.</p>
+          </div>
           </div>
         </div>
       </div>
