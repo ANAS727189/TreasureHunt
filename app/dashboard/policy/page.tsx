@@ -299,7 +299,7 @@ export default function PolicyPage() {
         </div>
       </div>
 
-      <nav className="bg-gray-800 text-white p-4 my-5 flex justify-around">
+      <nav className="bg-gray-700 text-white p-4 my-5 flex justify-around">
         <CringePdfLink label="🏠 Home" />
         <CringePdfLink label="🍕 Cafeteria Menu" />
         <CringePdfLink label="💼 Our Values" />
