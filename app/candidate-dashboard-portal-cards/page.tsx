@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import EasyPath2 from '@/components/path-2/Easy-Path-2';
+import EasyPath3 from '@/components/path-2/Easy-Path-3';
+import ApplyCard from '@/components/ApplyCard';
 
 export default function Dashboard() {
   return (
@@ -14,13 +17,13 @@ export default function Dashboard() {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
             </span>
             <span className="text-red-700 font-semibold">
-              8 'Urgent' Tasks Pending
+              8 &apos;Urgent&apos; Tasks Pending
             </span>
           </div>
         </div>
 
         <p className="text-lg text-gray-600 mb-10">
-          You're in. Good job... hacker. Now the *real* test begins. HR has
+          You&apos;re in. Good job... hacker. Now the *real* test begins. HR has
           flagged the following items for your immediate attention. Choose your
           first task wisely.
         </p>
@@ -60,67 +63,13 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Path 1: The "Obvious" Path */}
-          <Link
-            href="/candidate-dashboard-portal-cards/apply"
-            className="flex flex-col h-full bg-blue-50 hover:bg-blue-100 rounded-lg shadow-sm border border-blue-200 transform hover:-translate-y-1 transition-all overflow-hidden"
-          >
-            <Image src="/memes/works-on-my-machine.webp" alt="It works on my machine meme" width={400} height={200} className="w-full h-48 object-cover"/>
-            <div className="p-6 grow">
-              <h2 className="text-2xl font-semibold text-blue-800 mb-2">
-                Apply: 'Urgent Code Ninja'
-              </h2>
-              <p className="text-blue-700">
-                The standard application form. Seems simple enough...
-              </p>
-            </div>
-            <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-blue-100">
-              <strong>Priority:</strong> <span className="text-red-600 font-bold">HIGH</span><br/>
-              <strong>Status:</strong> <Link href="/candidate-dashboard-portal-cards/status" className="text-blue-600 hover:underline">Pending Review</Link><br/>
-              <strong>Owner:</strong> <Link href="/candidate-dashboard-portal-cards/owner" className="text-blue-600 hover:underline">HR Department</Link>
-            </footer>
-          </Link>
+          <ApplyCard />
 
           {/* Path 2: The "Safe" Path */}
-          <Link
-            href="/candidate-dashboard-portal-cards/blog"
-            className="flex flex-col h-full bg-green-50 hover:bg-green-100 rounded-lg shadow-sm border border-green-200 transform hover:-translate-y-1 transition-all overflow-hidden"
-          >
-            <Image src="/memes/This-Is-Fine-Dog-Fire-Meme-Sticker.webp" alt="This is fine meme" width={400} height={200} className="w-full h-48 object-cover"/>
-            <div className="p-6 grow">
-              <h2 className="text-2xl font-semibold text-green-800 mb-2">
-                Company Blog
-              </h2>
-              <p className="text-green-700">
-                See what our "happy" team has been writing about.
-              </p>
-            </div>
-            <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-green-100">
-              <strong>Last Updated:</strong> 3 hours ago<br/>
-              <strong>Author:</strong> Marketing Intern<br/>
-              <strong>Views:</strong> 12
-            </footer>
-          </Link>
+          <EasyPath2 />
 
           {/* Path 3: The "Networking" Path */}
-          <Link
-            href="/candidate-dashboard-portal-cards/team"
-            className="flex flex-col h-full bg-indigo-50 hover:bg-indigo-100 rounded-lg shadow-sm border border-indigo-200 transform hover:-translate-y-1 transition-all overflow-hidden"
-          >
-            <Image src="/memes/240px-Distracted_Boyfriend_meme_4.webp" alt="Distracted boyfriend meme" width={400} height={200} className="w-full h-48 object-cover"/>
-            <div className="p-6 grow">
-              <h2 className="text-2xl font-semibold text-indigo-800 mb-2">
-                Meet the Team
-              </h2>
-              <p className="text-indigo-700">
-                Find out who your future (or former) colleagues are.
-              </p>
-            </div>
-            <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-indigo-100">
-              <strong>Contains:</strong> Directory, Org Chart<br/>
-              <strong>Action:</strong> <span className="text-blue-600">Connect</span><br/>
-              <strong>Status:</strong> Up-to-date
-            </footer>
-          </Link>
+          <EasyPath3 />
 
           {/* Path 4: The "Tech" Path */}
           <Link
@@ -130,16 +79,16 @@ export default function Dashboard() {
             <Image src="/memes/jenga.jpg" alt="Jenga tower code meme" width={400} height={200} className="w-full h-48 object-cover"/>
             <div className="p-6 grow">
               <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                Our 'Award-Winning' Tech
+                Our &apos;Award-Winning&apos;  Tech
               </h2>
               <p className="text-gray-700">
-                Learn about the 'cutting-edge' tools we use.
+                Learn about the &apos;cutting-edge&apos; tools we use.
               </p>
             </div>
             <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-gray-200">
               <strong>Classification:</strong> Internal Use Only<br/>
               <strong>Documentation:</strong> v0.1 (Draft)<br/>
-              <strong>Maintained by:</strong> 'The Interns'
+              <strong>Maintained by:</strong> &apos;The Interns&apos;
             </footer>
           </Link>
 
@@ -172,10 +121,10 @@ export default function Dashboard() {
             <Image src="/memes/free-real-estate.webp" alt="It's free real estate meme" width={400} height={200} className="w-full h-48 object-cover"/>
             <div className="p-6 grow">
               <h2 className="text-2xl font-semibold text-red-800 mb-2">
-                Apply: 'Unpaid Internship'
+                Apply: &apos;Unpaid Internship&apos;
               </h2>
               <p className="text-red-700">
-                6 months, no pay. Great 'exposure'. (Leads to /nalla).
+                6 months, no pay. Great &apos;exposure&apos;. (Leads to /nalla).
               </p>
             </div>
             <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-red-100">
@@ -217,7 +166,7 @@ export default function Dashboard() {
                 Company Swag Store
               </h2>
               <p className="text-purple-700">
-                Buy our branded mugs and t-shirts. (Currently "Sold Out").
+                Buy our branded mugs and t-shirts. (Currently &quot;Sold Out&quot;).
               </p>
             </div>
             <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-purple-100">
