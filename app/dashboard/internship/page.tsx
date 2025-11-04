@@ -70,6 +70,7 @@ const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     };
 
     const handleMouseUp = () => {
+        if (!isDrawing) return;
         setIsDrawing(false);
         if (points.length < 10) return;
         setAttempts(prev => prev + 1);
