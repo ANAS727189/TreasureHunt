@@ -1,27 +1,16 @@
 'use client';
 
-import { useState, FormEvent, useEffect } from 'react';
-import Image from 'next/image';
+import { useState, FormEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 function WinnerPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const path = searchParams.get('path');
-
-  useEffect(() => {
-    // Check if user has completed the required puzzles
-    const puzzleProgress = typeof window !== 'undefined' ? localStorage.getItem('puzzleProgress') : null;
-    const isAuthenticated = typeof window !== 'undefined' ? !!localStorage.getItem('auth_token') : false;
-
-    if (!isAuthenticated || puzzleProgress !== 'GRIND_SOLVED') {
-      router.push('/candidate-dashboard-portal-cards/stack');
-    }
-  }, [router]);
+   const searchParams = useSearchParams();
+    const path = searchParams.get('path');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
