@@ -39,13 +39,13 @@ export default function HRComplaints() {
 
   const getNavigationLinks = () => {
     const baseLinks = [
-      { href: '/dashboard/stack/hr-values', text: 'Employee Value Framework' },
+      { href: '/candidate-dashboard-portal-cards/angry-hr-complaint/hr-values', text: 'Employee Value Framework' },
       { href: '/tu-nalla-hi-marega', text: 'HR Action Items' },
       { href: '/tu-nalla-hi-marega', text: 'Exit Interview Policy' },
     ];
     if (puzzleProgress === 'GRIND_SOLVED') {
       baseLinks.push(
-        { href: '/dashboard/stack/hr-portal', text: 'HR Internal Portal' }
+        { href: '/candidate-dashboard-portal-cards/angry-hr-complaint/hr-portal', text: 'HR Internal Portal' }
       );
     }
 

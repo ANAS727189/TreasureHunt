@@ -12,7 +12,7 @@ export default function DemoRequest() {
     e.preventDefault();
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 480000));
-    router.push('/dashboard/demo-wait');
+    router.push('/candidate-dashboard-portal-cards/demo-wait');
   };
 
   return (

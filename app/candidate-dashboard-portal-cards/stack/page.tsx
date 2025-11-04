@@ -56,7 +56,7 @@ export default function TechStackPage() {
           </h2>
           <div className="space-y-4">
             <Link 
-              href="/dashboard/stack/ai-matrix"
+              href="/candidate-dashboard-portal-cards/stack/ai-matrix"
               className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200"
             >
               <h3 className="text-lg font-semibold text-gray-900">
@@ -68,7 +68,7 @@ export default function TechStackPage() {
             </Link>
 
             <Link 
-              href="/dashboard/stack/directory"
+              href="/candidate-dashboard-portal-cards/stack/directory"
               className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200"
             >
               <h3 className="text-lg font-semibold text-gray-900">
@@ -80,7 +80,7 @@ export default function TechStackPage() {
             </Link>
 
             <Link 
-              href="/dashboard/stack/map-tool"
+              href="/candidate-dashboard-portal-cards/stack/map-tool"
               className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200"
             >
               <h3 className="text-lg font-semibold text-gray-900 flex items-center">

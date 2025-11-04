@@ -39,13 +39,13 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center space-x-8 mt-4 md:mt-0">
             <Link 
-              href="/dashboard/demo-request"
+              href="/candidate-dashboard-portal-cards/demo-request"
               className="text-blue-400 hover:text-blue-300 underline"
             >
               Request a Demo
             </Link>
             <Link 
-              href="/dashboard/annual-report"
+              href="/candidate-dashboard-portal-cards/annual-report"
               className="text-blue-400 hover:text-blue-300 underline flex items-center"
             >
               Download Annual Report (PDF, 50MB)
@@ -61,7 +61,7 @@ export default function Dashboard() {
           
           {/* Path 1: The "Obvious" Path */}
           <Link
-            href="/dashboard/apply"
+            href="/candidate-dashboard-portal-cards/apply"
             className="flex flex-col h-full bg-blue-50 hover:bg-blue-100 rounded-lg shadow-sm border border-blue-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/works-on-my-machine.webp" alt="It works on my machine meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -75,14 +75,14 @@ export default function Dashboard() {
             </div>
             <footer className="p-6 pt-2 text-sm text-gray-500 border-t border-blue-100">
               <strong>Priority:</strong> <span className="text-red-600 font-bold">HIGH</span><br/>
-              <strong>Status:</strong> <Link href="/dashboard/status" className="text-blue-600 hover:underline">Pending Review</Link><br/>
-              <strong>Owner:</strong> <Link href="/dashboard/owner" className="text-blue-600 hover:underline">HR Department</Link>
+              <strong>Status:</strong> <Link href="/candidate-dashboard-portal-cards/status" className="text-blue-600 hover:underline">Pending Review</Link><br/>
+              <strong>Owner:</strong> <Link href="/candidate-dashboard-portal-cards/owner" className="text-blue-600 hover:underline">HR Department</Link>
             </footer>
           </Link>
 
           {/* Path 2: The "Safe" Path */}
           <Link
-            href="/dashboard/blog"
+            href="/candidate-dashboard-portal-cards/blog"
             className="flex flex-col h-full bg-green-50 hover:bg-green-100 rounded-lg shadow-sm border border-green-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/This-Is-Fine-Dog-Fire-Meme-Sticker.webp" alt="This is fine meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -103,7 +103,7 @@ export default function Dashboard() {
 
           {/* Path 3: The "Networking" Path */}
           <Link
-            href="/dashboard/team"
+            href="/candidate-dashboard-portal-cards/team"
             className="flex flex-col h-full bg-indigo-50 hover:bg-indigo-100 rounded-lg shadow-sm border border-indigo-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/240px-Distracted_Boyfriend_meme_4.webp" alt="Distracted boyfriend meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -124,7 +124,7 @@ export default function Dashboard() {
 
           {/* Path 4: The "Tech" Path */}
           <Link
-            href="/dashboard/stack"
+            href="/candidate-dashboard-portal-cards/stack"
             className="flex flex-col h-full bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm border border-gray-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/jenga.jpg" alt="Jenga tower code meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -145,7 +145,7 @@ export default function Dashboard() {
 
           {/* Path 5: The "Boring" Path */}
           <Link
-            href="/dashboard/policy"
+            href="/candidate-dashboard-portal-cards/policy"
             className="flex flex-col h-full bg-gray-50 hover:bg-gray-100 rounded-lg shadow-sm border border-gray-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/agree-condition.webp" alt="I read the terms and conditions" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -166,7 +166,7 @@ export default function Dashboard() {
 
           {/* Path 6: The "Desperate" Path (Trap) */}
           <Link
-            href="/dashboard/internship"
+            href="/candidate-dashboard-portal-cards/internship"
             className="flex flex-col h-full bg-red-50 hover:bg-red-100 rounded-lg shadow-sm border border-red-300 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/free-real-estate.webp" alt="It's free real estate meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -187,7 +187,7 @@ export default function Dashboard() {
 
           {/* Path 7: The "Weird" Path */}
           <Link
-            href="/dashboard/grievance"
+            href="/candidate-dashboard-portal-cards/grievance"
             className="flex flex-col h-full bg-orange-50 hover:bg-orange-100 rounded-lg shadow-sm border border-orange-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/worthless.webp" alt="This is worthless meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -208,7 +208,7 @@ export default function Dashboard() {
 
           {/* Path 8: The "Pointless" Path */}
           <Link
-            href="/dashboard/swag-store"
+            href="/candidate-dashboard-portal-cards/swag-store"
             className="flex flex-col h-full bg-purple-50 hover:bg-purple-100 rounded-lg shadow-sm border border-purple-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/shut-up-take-money.webp" alt="Shut up and take my money meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -229,7 +229,7 @@ export default function Dashboard() {
 
           {/* Path 9: The "HR Files" Path */}
           <Link
-            href="/dashboard/stack/hr-complaints"
+            href="/candidate-dashboard-portal-cards/angry-hr-complaint/hr-complaints"
             className="flex flex-col h-full bg-yellow-50 hover:bg-yellow-100 rounded-lg shadow-sm border border-yellow-200 transform hover:-translate-y-1 transition-all overflow-hidden"
           >
             <Image src="/memes/jhethalala-angry.webp" alt="Jethalal Angry Boss Meme" width={400} height={200} className="w-full h-48 object-cover"/>
@@ -258,14 +258,14 @@ export default function Dashboard() {
           </p>
           <div className="space-x-4">
             <Link
-              href="/dashboard/demo-request"
+              href="/candidate-dashboard-portal-cards/demo-request"
               className="text-blue-500 hover:text-blue-600 hover:underline"
             >
               Request a Demo
             </Link>
             <span>|</span>
             <Link
-              href="/dashboard/annual-report" 
+              href="/candidate-dashboard-portal-cards/annual-report" 
               className="text-blue-500 hover:text-blue-600 hover:underline"
             >
               Download Annual Report (PDF, 50MB)

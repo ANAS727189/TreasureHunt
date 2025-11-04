@@ -14,7 +14,7 @@ export default function HRPortal() {
     
     const validPasswords = ['README', 'readme', 'Readme'];
     if (validPasswords.includes(password)) {
-      router.push('/yay-i-got-the-job-in-MTV-haha');
+      router.push('/candidate-dashboard-portal-cards/angry-hr-complaint/yay-i-got-the-job-in-MTV-haha');
     } else {
       setError('Incorrect password. Think about what developers always read first...');
     }

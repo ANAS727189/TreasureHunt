@@ -10,7 +10,7 @@ export default function MapToolUnlocked() {
   useEffect(() => {
     const hasAccess = localStorage.getItem('mapToolAccess') === 'granted';
     if (!hasAccess) {
-      router.replace('/dashboard/stack/map-tool');
+      router.replace('/candidate-dashboard-portal-cards/stack/map-tool');
     }
   }, [router]);
 

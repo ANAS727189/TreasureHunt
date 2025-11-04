@@ -21,7 +21,7 @@ export function LoginModal({ onClose }: { onClose: () => void }) {
     });
 
     if (res.ok) {
-      router.push('/dashboard');
+      router.push('/candidate-dashboard-portal-cards');
     } else {
       const data = await res.json();
       setError(data.error || 'Login failed. Try again.');
