@@ -175,9 +175,12 @@ export default function PolicyPage() {
     if (isCorrect) {
       setIsSubmitting(true);
       setIsWinner(true);
+      localStorage.setItem("policyPuzzleCompleted", "true");
 
       setTimeout(() => {
-        router.push("/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha");
+        router.push(
+          "/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha"
+        );
       }, 500);
     } else {
       alert("❌ That's not quite right... Keep trying!");
