@@ -177,7 +177,7 @@ export default function PolicyPage() {
       setIsWinner(true);
 
       setTimeout(() => {
-        router.push("/yay-i-got-the-job-in-MTV-haha");
+        router.push("/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha");
       }, 500);
     } else {
       alert("❌ That's not quite right... Keep trying!");
