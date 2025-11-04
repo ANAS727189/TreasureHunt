@@ -242,27 +242,27 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 
+const allRules = [
+    { text: "Rule 1: Your password must be at least 12 characters. Because size does matter.", check: (p: string) => p.length >= 12 },
+    { text: "Rule 2: Must contain an uppercase letter. To show you're serious.", check: (p: string) => /[A-Z]/.test(p) },
+    { text: "Rule 3: Must contain a number. Let's not make it too easy.", check: (p: string) => /[0-9]/.test(p) },
+    { text: "Rule 4: A special character, for a little spice.", check: (p: string) => /[!@#$%^&*]/.test(p) },
+    { text: "Rule 5: The digits must add up to 25. We know you can count.", check: (p: string) => (p.match(/\d/g) || []).reduce((sum, digit) => sum + parseInt(digit), 0) === 25 },
+    { text: "Rule 6: A month of the year. Yes.. beleive me that's it.", check: (p: string) => /january|february|march|april|may|june|july|august|september|october|november|december/i.test(p) },
+    { text: "Rule 7: Got you!! A Roman numeral.", check: (p:string) => /[IVXLCDM]/.test(p)},
+    { text: "Rule 8: A lowercase letter. Don't shout at us.", check: (p: string) => /[a-z]/.test(p) },
+    { text: "Rule 9: No consecutive identical characters. Originality, please.", check: (p: string) => !/(.)\1/.test(p) },
+    { text: "Rule 10: A prime number. We value prime candidates.", check: (p: string) => /\b(2|3|5|7|11|13|17|19|23|29|31|37|41|43|47)\b/.test(p) },
+    { text: "Rule 11: A fruit. Because... health.", check: (p: string) => /apple|banana|orange|grape|mango|pineapple/i.test(p) },
+    { text: "Rule 12: The current year. Are you even paying attention?", check: (p: string) => p.includes("2025") },
+    { text: "Rule 13: Must be a Fibonacci number length. Naturally.", check: (p: string) => [13, 21, 34, 55].includes(p.length) },
+    { text: "Rule 14: A programming language. Show us your nerd cred.", check: (p: string) => /python|javascript|typescript|java|c#|c\+\+|go|rust|swift/i.test(p) },
+    { text: "Rule 15: And finally, the name of this Pokémon:", check: (p: string) => /snorlax/i.test(p) },
+];
+
 const PasswordChallenge = ({ onComplete }: { onComplete: () => void }) => {
     const [password, setPassword] = useState("");
     const [visibleRulesCount, setVisibleRulesCount] = useState(1);
-
-    const allRules = [
-        { text: "Rule 1: Your password must be at least 12 characters. Because size does matter.", check: (p: string) => p.length >= 12 },
-        { text: "Rule 2: Must contain an uppercase letter. To show you're serious.", check: (p: string) => /[A-Z]/.test(p) },
-        { text: "Rule 3: Must contain a number. Let's not make it too easy.", check: (p: string) => /[0-9]/.test(p) },
-        { text: "Rule 4: A special character, for a little spice.", check: (p: string) => /[!@#$%^&*]/.test(p) },
-        { text: "Rule 5: The digits must add up to 25. We know you can count.", check: (p: string) => (p.match(/\d/g) || []).reduce((sum, digit) => sum + parseInt(digit), 0) === 25 },
-        { text: "Rule 6: A month of the year. Yes.. beleive me that's it.", check: (p: string) => /january|february|march|april|may|june|july|august|september|october|november|december/i.test(p) },
-        { text: "Rule 7: Got you!! A Roman numeral.", check: (p:string) => /[IVXLCDM]/.test(p)},
-        { text: "Rule 8: A lowercase letter. Don't shout at us.", check: (p: string) => /[a-z]/.test(p) },
-        { text: "Rule 9: No consecutive identical characters. Originality, please.", check: (p: string) => !/(.)\1/.test(p) },
-        { text: "Rule 10: A prime number. We value prime candidates.", check: (p: string) => /\b(2|3|5|7|11|13|17|19|23|29|31|37|41|43|47)\b/.test(p) },
-        { text: "Rule 11: A fruit. Because... health.", check: (p: string) => /apple|banana|orange|grape|mango|pineapple/i.test(p) },
-        { text: "Rule 12: The current year. Are you even paying attention?", check: (p: string) => p.includes("2025") },
-        { text: "Rule 13: Must be a Fibonacci number length. Naturally.", check: (p: string) => [13, 21, 34, 55].includes(p.length) },
-        { text: "Rule 14: A programming language. Show us your nerd cred.", check: (p: string) => /python|javascript|typescript|java|c#|c\+\+|go|rust|swift/i.test(p) },
-        { text: "Rule 15: And finally, the name of this Pokémon:", check: (p: string) => /snorlax/i.test(p) },
-    ];
 
     const [rules, setRules] = useState(allRules.map(rule => ({ ...rule, satisfied: false })));
     const [showPokemon, setShowPokemon] = useState(false);
