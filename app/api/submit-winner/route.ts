@@ -3,7 +3,7 @@ import clientPromise from '@/lib/mongodb';
 
 export async function POST(request: Request) {
   try {
-    const { name } = await request.json();
+    const { name, path } = await request.json();
 
     if (!name || name.trim().length === 0) {
       return NextResponse.json({ error: 'Name is required.' }, { status: 400 });
@@ -14,6 +14,7 @@ export async function POST(request: Request) {
 
     const result = await db.collection('winners').insertOne({
       name: name.trim(),
+      path: path,
       createdAt: new Date(),
     });
 

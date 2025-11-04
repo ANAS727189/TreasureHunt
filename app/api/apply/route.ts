@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     { 
       message: "Congratulations! You've proven yourself worthy!",
-      redirect: '/candidate-dashboard-portal-cards/apply/yay-i-got-the-job-in-MTV-haha'
+      redirect: '/candidate-dashboard-portal-cards/apply/final-review'
     },
     { status: 200 }
   );

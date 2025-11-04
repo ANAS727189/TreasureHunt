@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 function WinnerPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  const searchParams = useSearchParams();
+  const path = searchParams.get('path');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -18,7 +22,10 @@ function WinnerPage() {
     const res = await fetch('/api/submit-winner', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim() }),
+      body: JSON.stringify({ 
+        name: name.trim(),
+        path: path || 'unknown'
+      }),
     });
 
     const data = await res.json();
