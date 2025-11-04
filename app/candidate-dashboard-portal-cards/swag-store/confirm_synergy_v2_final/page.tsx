@@ -20,7 +20,7 @@ export default function CringeBillingPage() {
   useEffect(() => {
     if (!isUnlocked) {
       alert("HEY! No cutting the line, chief. Solve the puzzle first.");
-      router.push("/dashboard/swag-store");
+      router.push("/candidate-dashboard-portal-cards/swag-store");
     }
   }, [isUnlocked, router]);
 
@@ -77,7 +77,7 @@ export default function CringeBillingPage() {
               (You must mine at least 1.0 GARYcoin to complete the purchase.)
             </p>
             <Link
-              href="/dashboard/swag-store/confirm_synergy_v2_final/alt"
+              href="/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final/alt"
               className="w-full bg-purple-600 text-white font-bold py-4 px-8 rounded-lg text-2xl hover:bg-purple-700 transition-all animate-bounce"
             >
               INITIALIZE GARYCOIN MINER

@@ -214,7 +214,7 @@ export default function CringeSwagStore() {
                 />
                 {isUnlocked ? (
                   <Link
-                    href="/dashboard/swag-store/confirm_synergy_v2_final"
+                    href="/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final"
                     className="w-full text-center bg-green-500 text-white font-bold py-2 px-4 rounded-lg text-lg hover:bg-green-600 animate-pulse"
                   >
                     BUY NOW!!
