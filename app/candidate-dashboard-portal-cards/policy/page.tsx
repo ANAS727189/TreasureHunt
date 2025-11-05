@@ -175,11 +175,11 @@ export default function PolicyPage() {
     if (isCorrect) {
       setIsSubmitting(true);
       setIsWinner(true);
-      localStorage.setItem("policyPuzzleCompleted", "true");
+      sessionStorage.setItem("policyPuzzleCompleted", "true");
 
       setTimeout(() => {
         router.push(
-          "/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha?path=policy"
+          "/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha"
         );
       }, 500);
     } else {

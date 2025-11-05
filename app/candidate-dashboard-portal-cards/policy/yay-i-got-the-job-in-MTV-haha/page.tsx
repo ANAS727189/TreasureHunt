@@ -2,29 +2,37 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const puzzleCompleted =
-      typeof window !== "undefined"
-        ? localStorage.getItem("policyPuzzleCompleted")
-        : null;
-    const isAuthenticated =
-      typeof window !== "undefined"
-        ? !!localStorage.getItem("auth_token")
-        : false;
+    const puzzleCompleted = sessionStorage.getItem("policyPuzzleCompleted");
 
-    if (!isAuthenticated || puzzleCompleted !== "true") {
-      router.push("/candidate-dashboard-portal-cards/policy");
+    if (puzzleCompleted !== "true") {
+      router.replace("/candidate-dashboard-portal-cards/policy");
+    } else {
+      setIsValidated(true);
     }
   }, [router]);
+
+  if (!isValidated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-blue-600"></div>
+          <h1 className="mt-4 text-xl font-semibold text-gray-700">
+            Verifying access...
+          </h1>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,7 +41,7 @@ function WinnerPage() {
       return;
     }
 
-    const path = searchParams.get("path");
+    const path = "policy";
 
     const res = await fetch("/api/submit-winner", {
       method: "POST",
