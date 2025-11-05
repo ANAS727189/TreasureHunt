@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
       'q4-a', 'q4-b',         // Question 4: A, B are correct (should NOT be crossed)
       'q5-a', 'q5-b', 'q5-c', // Question 5: A, B, C are correct (should NOT be crossed)
       'q6-a', 'q6-b', 'q6-d', // Question 6: A, B, D are correct (should NOT be crossed)
-      'q7-a', 'q7-b', 'q7-d', // Question 7: A, B, D are correct (should NOT be crossed)
-      'q8-a',                  // Question 8: A is correct (should NOT be crossed)
+      'q7-a', 'q7-b',         // Question 7: A, B are correct (should NOT be crossed)
+      'q8-a',                 // Question 8: A is correct (should NOT be crossed)
     ];
 
     const allOptions = [
