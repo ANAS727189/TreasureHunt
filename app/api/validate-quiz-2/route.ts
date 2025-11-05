@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
 
                 await db.collection('winners').insertOne({
                     name: name.trim(),
+                    path: 'ye-nahi-kar-paaoge-tum',
                     createdAt: new Date(),
-                    quiz: 'ye-nahi-kar-paaoge-tum'
                 });
             } catch (dbError) {
                 console.error('Error saving winner to database:', dbError);
