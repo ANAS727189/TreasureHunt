@@ -2,13 +2,14 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Check if user has completed the swag store puzzle (mined GARYcoin)
@@ -41,10 +42,12 @@ function WinnerPage() {
       return;
     }
 
+    const path = searchParams.get("path");
+
     const res = await fetch("/api/submit-winner", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name.trim() }),
+      body: JSON.stringify({ name: name.trim(), path }),
     });
 
     const data = await res.json();
