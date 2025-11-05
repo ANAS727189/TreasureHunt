@@ -17,6 +17,7 @@ export default function DashboardLayout({
     });
 
     if (res.ok) {
+      // Clear all session storage on logout
       sessionStorage.clear();
       router.push("/");
     }
