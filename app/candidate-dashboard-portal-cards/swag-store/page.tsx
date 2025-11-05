@@ -108,19 +108,19 @@ export default function CringeSwagStore() {
   const [clickedWasteLinks, setClickedWasteLinks] = useState<number>(0);
   const [showMessage, setShowMessage] = useState(false);
 
-  // Load click count from localStorage on mount
+  // Load click count from sessionStorage on mount
   useEffect(() => {
-    const savedCount = localStorage.getItem("wasteLinksClicked");
+    const savedCount = sessionStorage.getItem("wasteLinksClicked");
     if (savedCount) {
       const count = parseInt(savedCount, 10);
       setClickedWasteLinks(count);
     }
   }, []);
 
-  // Save click count to localStorage whenever it changes
+  // Save click count to sessionStorage whenever it changes
   useEffect(() => {
     if (clickedWasteLinks > 0) {
-      localStorage.setItem("wasteLinksClicked", clickedWasteLinks.toString());
+      sessionStorage.setItem("wasteLinksClicked", clickedWasteLinks.toString());
     }
   }, [clickedWasteLinks]);
 
@@ -167,7 +167,7 @@ export default function CringeSwagStore() {
     if (productId === 6) {
       if (clickedWasteLinks >= 3) {
         // Set a flag that user is ready to checkout
-        localStorage.setItem("readyToCheckout", "true");
+        sessionStorage.setItem("readyToCheckout", "true");
         window.location.href =
           "/candidate-dashboard-portal-cards/swag-store/confirm_synergy_v2_final";
       } else {

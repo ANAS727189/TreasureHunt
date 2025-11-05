@@ -2,35 +2,26 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     // Check if user has completed the swag store puzzle (mined GARYcoin)
     const storeUnlocked =
       typeof window !== "undefined"
-        ? localStorage.getItem("swagStoreUnlocked")
+        ? sessionStorage.getItem("swagStoreUnlocked")
         : null;
     const paymentSubmitted =
       typeof window !== "undefined"
-        ? localStorage.getItem("swagStorePaymentSubmitted")
+        ? sessionStorage.getItem("swagStorePaymentSubmitted")
         : null;
-    const isAuthenticated =
-      typeof window !== "undefined"
-        ? !!localStorage.getItem("auth_token")
-        : false;
 
-    if (
-      !isAuthenticated ||
-      storeUnlocked !== "true" ||
-      paymentSubmitted !== "true"
-    ) {
+    if (storeUnlocked !== "true" || paymentSubmitted !== "true") {
       router.push("/candidate-dashboard-portal-cards/swag-store");
     }
   }, [router]);
@@ -42,7 +33,7 @@ function WinnerPage() {
       return;
     }
 
-    const path = searchParams.get("path");
+    const path = "swag-store";
 
     const res = await fetch("/api/submit-winner", {
       method: "POST",
