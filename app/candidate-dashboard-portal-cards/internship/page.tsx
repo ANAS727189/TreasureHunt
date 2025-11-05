@@ -3,6 +3,35 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
+const Header = () => {
+    return (
+        <header className="bg-gray-800 text-white p-4 flex justify-between items-center" style={{ fontFamily: 'Arial, sans-serif' }}>
+            <div className="flex items-center">
+                <img src="/file.svg" alt="Logo" className="h-8 w-8 mr-2" />
+                <h1 className="text-xl font-bold">Unpaid Internship Portal</h1>
+            </div>
+            <nav>
+                <a href="https://www.youtube.com/shorts/ew7r0z-gZjo" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Secret Link</a>
+                <a href="https://www.youtube.com/shorts/FWB2I6joOa0" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Do Not Visit</a>
+                <a href="https://www.youtube.com/shorts/Fky7nSpNOr8" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Surprise</a>
+            </nav>
+        </header>
+    );
+};
+
+const Footer = () => {
+    return (
+        <footer className="bg-gray-800 text-white p-4 text-center text-sm" style={{ fontFamily: 'Arial, sans-serif' }}>
+            <p>© 2025 Inhuman Resources, Inc. All Rights Reserved.</p>
+            <div className="mt-2">
+                <a href="https://www.youtube.com/shorts/GQNW1IlvhcY" className="text-gray-400 hover:text-white mx-2">Final Challange</a>
+                <a href="https://www.youtube.com/watch?v=rOeeBzMd_6I" className="text-gray-400 hover:text-white mx-2">Help Me</a>
+                <a href="https://www.youtube.com/shorts/1wxrZEFFslY" className="text-gray-400 hover:text-white mx-2">Are You Sure</a>
+            </div>
+        </footer>
+    );
+};
+
 const DrawCircleChallenge = ({ onComplete }: { onComplete: () => void }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -473,14 +502,18 @@ export default function InternshipPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 text-white p-4 sm:p-8 md:p-12 font-sans">
-      <div className="text-center space-y-6 max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-200 sm:text-5xl md:text-6xl">Unpaid Internship Application</h1>
-        <p className="mt-6 text-lg leading-8 text-gray-400">Prove your worth. Complete the tasks.</p>
-        <div className="bg-white/10 p-8 rounded-2xl shadow-2xl w-full min-h-[350px] backdrop-blur-lg">
-            {stage < challenges.length ? challenges[stage] : <p className="text-2xl font-bold">Congratulations. We'll be in touch. Maybe.</p>}
-        </div>
-      </div>
-    </main>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 font-sans">
+        <Header />
+        <main className="flex-grow text-white p-4 sm:p-8 md:p-12">
+            <div className="text-center space-y-6 max-w-3xl mx-auto">
+                <h1 className="text-4xl font-bold text-gray-200 sm:text-5xl md:text-6xl">Unpaid Internship Application</h1>
+                <p className="mt-6 text-lg leading-8 text-gray-400">Prove your worth. Complete the tasks.</p>
+                <div className="bg-white/10 p-8 rounded-2xl shadow-2xl w-full min-h-[350px] backdrop-blur-lg">
+                    {stage < challenges.length ? challenges[stage] : <p className="text-2xl font-bold">Congratulations. We'll be in touch. Maybe.</p>}
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </div>
   );
 }
