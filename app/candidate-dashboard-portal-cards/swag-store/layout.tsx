@@ -22,10 +22,10 @@ export default function SwagStoreLayout({ children }: { children: ReactNode }) {
   const [isPaymentSubmitted, setIsPaymentSubmitted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load state from localStorage on mount
+  // Load state from sessionStorage on mount
   useEffect(() => {
-    const savedUnlocked = localStorage.getItem("swagStoreUnlocked");
-    const savedPayment = localStorage.getItem("swagStorePaymentSubmitted");
+    const savedUnlocked = sessionStorage.getItem("swagStoreUnlocked");
+    const savedPayment = sessionStorage.getItem("swagStorePaymentSubmitted");
 
     if (savedUnlocked === "true") {
       setIsUnlocked(true);
@@ -36,16 +36,16 @@ export default function SwagStoreLayout({ children }: { children: ReactNode }) {
     setIsLoaded(true);
   }, []);
 
-  // Save to localStorage whenever state changes
+  // Save to sessionStorage whenever state changes
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem("swagStoreUnlocked", isUnlocked.toString());
+      sessionStorage.setItem("swagStoreUnlocked", isUnlocked.toString());
     }
   }, [isUnlocked, isLoaded]);
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem(
+      sessionStorage.setItem(
         "swagStorePaymentSubmitted",
         isPaymentSubmitted.toString()
       );

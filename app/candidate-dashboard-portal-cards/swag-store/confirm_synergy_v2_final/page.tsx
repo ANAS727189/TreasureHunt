@@ -20,20 +20,20 @@ export default function CringeBillingPage() {
   const [paymentMode, setPaymentMode] = useState("cash");
 
   useEffect(() => {
-    // Wait a bit for the context to load from localStorage
+    // Wait a bit for the context to load from sessionStorage
     const timer = setTimeout(() => {
-      const readyToCheckout = localStorage.getItem("readyToCheckout");
+      const readyToCheckout = sessionStorage.getItem("readyToCheckout");
       const wasteLinksClicked = parseInt(
-        localStorage.getItem("wasteLinksClicked") || "0",
+        sessionStorage.getItem("wasteLinksClicked") || "0",
         10
       );
       const storeUnlocked =
-        localStorage.getItem("swagStoreUnlocked") === "true";
+        sessionStorage.getItem("swagStoreUnlocked") === "true";
 
       console.log(
         "Billing page validation. Context isUnlocked:",
         isUnlocked,
-        "localStorage storeUnlocked:",
+        "sessionStorage storeUnlocked:",
         storeUnlocked,
         "readyToCheckout:",
         readyToCheckout,
@@ -41,7 +41,7 @@ export default function CringeBillingPage() {
         wasteLinksClicked
       );
 
-      // Check both context and localStorage
+      // Check both context and sessionStorage
       const hasAccess =
         (isUnlocked || storeUnlocked) &&
         readyToCheckout === "true" &&

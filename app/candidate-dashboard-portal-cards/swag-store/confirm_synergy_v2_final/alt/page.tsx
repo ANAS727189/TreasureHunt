@@ -21,7 +21,7 @@ export default function GaryCoinMiner() {
   useEffect(() => {
     const paymentSubmitted =
       typeof window !== "undefined"
-        ? localStorage.getItem("swagStorePaymentSubmitted")
+        ? sessionStorage.getItem("swagStorePaymentSubmitted")
         : null;
 
     if (paymentSubmitted !== "true") {
