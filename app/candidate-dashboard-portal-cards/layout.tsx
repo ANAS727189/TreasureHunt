@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useRouter} from 'next/navigation';
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function DashboardLayout({
   children,
@@ -11,13 +11,14 @@ export default function DashboardLayout({
   const router = useRouter();
 
   const handleLogout = async () => {
-    const res = await fetch('/api/logout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
     });
 
     if (res.ok) {
-      router.push('/');
+      sessionStorage.clear();
+      router.push("/");
     }
   };
 
@@ -28,10 +29,13 @@ export default function DashboardLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/candidate-dashboard-portal-cards" className="flex items-center">
-              <span className="text-xl font-semibold text-gray-800">
-                Internal Dashboard
-              </span>
+              <Link
+                href="/candidate-dashboard-portal-cards"
+                className="flex items-center"
+              >
+                <span className="text-xl font-semibold text-gray-800">
+                  Internal Dashboard
+                </span>
               </Link>
             </div>
             <div className="flex items-center">
@@ -47,9 +51,7 @@ export default function DashboardLayout({
       </nav>
 
       {/* Main content */}
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        {children}
-      </main>
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">{children}</main>
     </div>
   );
 }

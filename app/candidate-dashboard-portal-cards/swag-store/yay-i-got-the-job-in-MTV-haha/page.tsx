@@ -14,22 +14,14 @@ function WinnerPage() {
     // Check if user has completed the swag store puzzle (mined GARYcoin)
     const storeUnlocked =
       typeof window !== "undefined"
-        ? localStorage.getItem("swagStoreUnlocked")
+        ? sessionStorage.getItem("swagStoreUnlocked")
         : null;
     const paymentSubmitted =
       typeof window !== "undefined"
-        ? localStorage.getItem("swagStorePaymentSubmitted")
+        ? sessionStorage.getItem("swagStorePaymentSubmitted")
         : null;
-    const isAuthenticated =
-      typeof window !== "undefined"
-        ? !!localStorage.getItem("auth_token")
-        : false;
 
-    if (
-      !isAuthenticated ||
-      storeUnlocked !== "true" ||
-      paymentSubmitted !== "true"
-    ) {
+    if (storeUnlocked !== "true" || paymentSubmitted !== "true") {
       router.push("/candidate-dashboard-portal-cards/swag-store");
     }
   }, [router]);
@@ -41,10 +33,12 @@ function WinnerPage() {
       return;
     }
 
+    const path = "swag-store";
+
     const res = await fetch("/api/submit-winner", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name.trim() }),
+      body: JSON.stringify({ name: name.trim(), path }),
     });
 
     const data = await res.json();
