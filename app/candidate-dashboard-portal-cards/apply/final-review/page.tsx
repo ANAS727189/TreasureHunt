@@ -57,9 +57,7 @@ export default function FinalReview() {
           </p>
           <hr className="my-3 border-gray-600" />
           <p className="font-mono text-yellow-300 text-lg">
-            "But we don't move forwards here, we pivot!"
-            <br />
-            "You must **reverse the count** before you join it to the joke's sound."
+            "But here we don't count forwards, we pivot!"
           </p>
         </div>
 

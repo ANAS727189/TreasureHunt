@@ -11,8 +11,26 @@ export default function Home() {
   if (isPending) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 bg-gray-900 text-white font-mono">
-        <div className="text-center">
-          <p className="text-xl">Loading...</p>
+        <div className="text-center space-y-6 max-w-3xl">
+          <h1 className="text-4xl md:text-6xl font-bold text-red-500 animate-pulse">
+            Kya Naukri Milegi Tumhe?
+          </h1>
+          <p className="text-2xl md:text-3xl text-yellow-400 font-bold">
+            The Ultimate Job Hunt
+          </p>
+          <div className="mt-8 space-y-3">
+            <p className="text-lg md:text-xl text-gray-300 animate-bounce">
+              🔍 Checking your credentials...
+            </p>
+            <p className="text-md text-gray-400">
+              HR is reviewing your profile...
+            </p>
+            <div className="flex justify-center items-center space-x-2 mt-4">
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            </div>
+          </div>
         </div>
       </main>
     );
