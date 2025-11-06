@@ -173,6 +173,31 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
 
     const windowIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const windowTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const completionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const completeChallenge = React.useCallback(() => {
+        if (completionTimeoutRef.current) {
+            return;
+        }
+        setIsCompleted(true);
+        setTaunt("You've navigated the corporate labyrinth! Promotion secured.");
+        completionTimeoutRef.current = setTimeout(() => {
+            onComplete();
+        }, 2000);
+    }, [onComplete]);
+
+    const registerScore = React.useCallback(() => {
+        setScore(prev => {
+            if (completionTimeoutRef.current) {
+                return prev;
+            }
+            const nextScore = prev + 1;
+            if (nextScore >= 10) {
+                completeChallenge();
+            }
+            return nextScore;
+        });
+    }, [completeChallenge]);
 
     const moveButton = () => {
         setPosition({
@@ -203,13 +228,12 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
     }, [isCompleted]);
 
     useEffect(() => {
-        if (score >= 10 && !isCompleted) {
-            setIsCompleted(true);
-            setTaunt("You've navigated the corporate labyrinth! Promotion secured.");
-            const finalTimeout = setTimeout(() => onComplete(), 2000);
-            return () => clearTimeout(finalTimeout);
-        }
-    }, [score, onComplete, isCompleted]);
+        return () => {
+            if (completionTimeoutRef.current) {
+                clearTimeout(completionTimeoutRef.current);
+            }
+        };
+    }, []);
 
     const handleMouseEnter = () => {
         if (isWindowOpen || isCompleted) return;
@@ -233,7 +257,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
                 setTaunt("Don't be greedy! Only one promotion per window.");
                 return;
             }
-            setScore(prev => prev + 1);
+            registerScore();
             setHasScoredThisWindow(true);
             setTaunt("Nice one! A guaranteed promotion.");
             if (windowTimeoutRef.current) {
@@ -243,7 +267,7 @@ const LadderChallenge = ({ onComplete }: { onComplete: () => void }) => {
             setIsWindowOpen(false);
             moveButton();
         } else { 
-            setScore(prev => prev + 1);
+            registerScore();
             moveButton();
             setTaunt("Got it! But the real challenge is catching it when it's frozen.");
         }
