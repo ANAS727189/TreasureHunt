@@ -168,13 +168,19 @@ export default function Dashboard() {
           Candidate Dashboard
         </h1>
         <div className="flex items-center space-x-2 p-2 bg-red-100 border border-red-300 rounded-lg">
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-          </span>
-          <span className="text-red-700 font-semibold">
-            9 &apos;Urgent&apos; Tasks Pending
-          </span>
+            <Link
+            href="/candidate-dashboard-portal-cards/task-queue"
+            className="flex items-center space-x-2 p-2 bg-red-100 border border-red-300 rounded-lg 
+                       hover:bg-red-200 hover:border-red-400 transition-all cursor-pointer"
+          >
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            </span>
+            <span className="text-red-700 font-semibold">
+              9 &apos;Urgent&apos; Tasks Pending
+            </span>
+          </Link>
         </div>
       </div>
 
