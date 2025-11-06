@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 import Image from 'next/image';
 
 
@@ -38,7 +38,6 @@ type AgreementState = {
 
 export default function Onboarding() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [shuffledPolicies, setShuffledPolicies] = useState<Policy[]>([]);
   const [agreements, setAgreements] = useState<AgreementState>({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -78,8 +77,7 @@ export default function Onboarding() {
   };
 
   const handleAgree = () => {
-    const path = searchParams.get('path');
-    router.push(`/candidate-dashboard-portal-cards/angry-hr-complaint/yay-i-got-the-job-in-MTV-haha?path=${path || 'angry-hr-9'}`);
+    router.push(`/candidate-dashboard-portal-cards/angry-hr-complaint/9YtPlItjptkvxnQvQsTI2rFjypoWCJLIU2mM5JL72z0?path=angry-hr-9`);
   };
 
 

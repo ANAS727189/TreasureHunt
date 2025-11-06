@@ -179,7 +179,7 @@ export default function PolicyPage() {
 
       setTimeout(() => {
         router.push(
-          "/candidate-dashboard-portal-cards/policy/yay-i-got-the-job-in-MTV-haha"
+          "/candidate-dashboard-portal-cards/policy/2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4"
         );
       }, 500);
     } else {

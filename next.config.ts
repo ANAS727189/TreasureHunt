@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: luckyPage,
-        destination: '/candidate-dashboard-portal-cards/stack/yay-i-got-the-job-in-MTV-haha?path=stack-4',
+        destination: '/candidate-dashboard-portal-cards/stack/sperPc08OGbzTRXULDJ2DhMY5QJoFrh61YkUnN3f7w?path=stack-4',
         permanent: false,
       },
       {

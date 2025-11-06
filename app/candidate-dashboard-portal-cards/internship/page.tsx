@@ -512,7 +512,7 @@ export default function InternshipPage() {
   useEffect(() => {
     if (stage === 4) {
       const timeoutId = setTimeout(() => {
-        router.push("/candidate-dashboard-portal-cards/internship/yay-i-got-the-job-in-MTV-haha");
+        router.push("/candidate-dashboard-portal-cards/internship/mtNa+d12y+vE5Ia5c0NrYx7ZN69/IpBzhutf7UlUgVc");
       }, 2000);
       return () => clearTimeout(timeoutId);
     }

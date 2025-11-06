@@ -1,27 +1,15 @@
 'use client';
 
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 
 function WinnerPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const path = searchParams.get('path');
-
-  useEffect(() => {
-  if (typeof window === 'undefined') return;
-
-  const puzzleProgress = localStorage.getItem('puzzleProgress');
-  if (puzzleProgress !== 'GRIND_SOLVED') {
-    router.push('/candidate-dashboard-portal-cards/stack');
-  }
-}, [router]);
-
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,10 +21,7 @@ function WinnerPage() {
     const res = await fetch('/api/submit-winner', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        name: name.trim(),
-        path: path || 'unknown'
-      }),
+      body: JSON.stringify({ name: name.trim(), path }),
     });
 
     const data = await res.json();
@@ -62,9 +47,13 @@ function WinnerPage() {
               className="mx-auto mb-8 rounded-lg"
             />
             
-            <h1 className="text-3xl font-bold mb-6 text-center">
-              You Actually Made It!
+             <h1 className="text-3xl font-bold mb-6 text-center">
+              You are a real Winner, You actually made it!
             </h1>
+
+             <h4 className="text-2xl font-semibold mb-6 text-center">
+              Winner Winner Paneer Dinner...
+            </h4>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

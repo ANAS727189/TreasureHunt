@@ -30,7 +30,7 @@ const Page = () => {
         setMessage('✅ Congratulations! Code verified successfully! Redirecting...');
         // Redirect to winner page
         setTimeout(() => {
-          router.push('/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/yay-i-got-the-job-in-MTV-haha?path=ye-nahi-kar-paaoge-tum');
+          router.push('/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng?path=ye-nahi-kar-paaoge-tum');
         }, 1500);
       } else {
         setMessage('❌ Invalid code. Please try again.');

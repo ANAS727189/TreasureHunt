@@ -15,7 +15,7 @@ export default function FinalReview() {
 
     if (answer.trim().toLowerCase() === correctAnswer) {
       setError('');
-      router.push('/candidate-dashboard-portal-cards/apply/yay-i-got-the-job-in-MTV-haha?path=apply-1');
+      router.push('/candidate-dashboard-portal-cards/apply/4wkcnaVUR4M8huJ83QVK+vlq2JFzCb7JC3zM6eX7/Xc?path=apply-1');
     } else {
       setError('Cultural fit... not detected. Access Denied.');
       setTimeout(() => {

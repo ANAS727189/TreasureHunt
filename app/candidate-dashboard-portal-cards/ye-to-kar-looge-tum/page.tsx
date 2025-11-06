@@ -41,7 +41,7 @@ const Page = () => {
         setWinnerSubmitted(true);
         // Redirect to winner page
         setTimeout(() => {
-          router.push('/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/yay-i-got-the-job-in-MTV-haha?path=ye-to-kar-looge-tum');
+          router.push('/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/duRmg1oRmGn7Wtzwlmo4sMBKY8Qh2wSgm+MkbkPD/7M?path=ye-to-kar-looge-tum');
         }, 1500);
       } else {
         setResult('FAILED! Try again.');
