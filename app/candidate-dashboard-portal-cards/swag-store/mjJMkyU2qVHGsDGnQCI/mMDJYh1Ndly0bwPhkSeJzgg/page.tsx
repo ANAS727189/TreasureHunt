@@ -2,27 +2,27 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const puzzleCompleted =
+    // Check if user has completed the swag store puzzle (mined GARYcoin)
+    const storeUnlocked =
       typeof window !== "undefined"
-        ? localStorage.getItem("policyPuzzleCompleted")
+        ? sessionStorage.getItem("swagStoreUnlocked")
         : null;
-    const isAuthenticated =
+    const paymentSubmitted =
       typeof window !== "undefined"
-        ? !!localStorage.getItem("auth_token")
-        : false;
+        ? sessionStorage.getItem("swagStorePaymentSubmitted")
+        : null;
 
-    if (!isAuthenticated || puzzleCompleted !== "true") {
-      router.push("/candidate-dashboard-portal-cards/policy");
+    if (storeUnlocked !== "true" || paymentSubmitted !== "true") {
+      router.push("/candidate-dashboard-portal-cards/swag-store");
     }
   }, [router]);
 
@@ -33,7 +33,7 @@ function WinnerPage() {
       return;
     }
 
-    const path = searchParams.get("path");
+    const path = "swag-store";
 
     const res = await fetch("/api/submit-winner", {
       method: "POST",
@@ -65,8 +65,12 @@ function WinnerPage() {
             />
 
             <h1 className="text-3xl font-bold mb-6 text-center">
-              You Actually Made It!
+              You are a real Winner, You actually made it!
             </h1>
+
+            <h4 className="text-2xl font-semibold mb-6 text-center">
+              Winner Winner Paneer Dinner...
+            </h4>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

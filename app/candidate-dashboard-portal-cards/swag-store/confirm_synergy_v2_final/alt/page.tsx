@@ -146,7 +146,7 @@ export default function GaryCoinMiner() {
               Gary is impressed with your hustle. You've earned the swag.
             </p>
             <Link
-              href="/candidate-dashboard-portal-cards/swag-store/yay-i-got-the-job-in-MTV-haha"
+              href="/candidate-dashboard-portal-cards/swag-store/mjJMkyU2qVHGsDGnQCI/mMDJYh1Ndly0bwPhkSeJzgg"
               className="inline-block bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-green-800 transition-all mt-4"
             >
               CLAIM YOUR PRIZE!

@@ -1,15 +1,27 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, FormEvent, useEffect } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 function WinnerPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-   const searchParams = useSearchParams();
-    const path = searchParams.get('path');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = searchParams.get('path');
+
+  useEffect(() => {
+  if (typeof window === 'undefined') return;
+
+  const puzzleProgress = localStorage.getItem('puzzleProgress');
+  if (puzzleProgress !== 'GRIND_SOLVED') {
+    router.push('/candidate-dashboard-portal-cards/stack');
+  }
+}, [router]);
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -51,9 +63,11 @@ function WinnerPage() {
             />
             
             <h1 className="text-3xl font-bold mb-6 text-center">
-              You Actually Made It!
+              You are a real Winner, You actually made it!
             </h1>
-
+             <h4 className="text-2xl font-semibold mb-6 text-center">
+              Winner Winner Paneer Dinner...
+            </h4>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-xl font-medium mb-2">
