@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const [selected, setSelected] = useState<{ [key: string]: boolean }>({});
@@ -9,6 +10,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [winnerSubmitted, setWinnerSubmitted] = useState(false);
+  const router = useRouter();
 
   const handleToggle = (id: string) => {
     setSelected(prev => ({ ...prev, [id]: !prev[id] }));
@@ -35,8 +37,12 @@ const Page = () => {
       const data = await response.json();
       
       if (data.passed) {
-        setResult('PASSED! 🎉 You are now in the Hall of Fame!');
+        setResult('PASSED! 🎉 Redirecting to winner page...');
         setWinnerSubmitted(true);
+        // Redirect to winner page
+        setTimeout(() => {
+          router.push('/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/yay-i-got-the-job-in-MTV-haha?path=ye-to-kar-looge-tum');
+        }, 1500);
       } else {
         setResult('FAILED! Try again.');
       }

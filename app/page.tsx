@@ -1,8 +1,53 @@
+'use client';
+
 import { LoginButton } from '@/components/LoginButton';
+import { GoogleLoginButton } from '@/components/GoogleLoginButton';
+import { useSession } from '@/lib/auth-client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
+  const { data: session, isPending } = useSession();
+
+  if (isPending) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 bg-gray-900 text-white font-mono">
+        <div className="text-center">
+          <p className="text-xl">Loading...</p>
+        </div>
+      </main>
+    );
+  }
+
+  // If not logged in with Google, show Google login page
+  if (!session) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 bg-gray-900 text-white font-mono">
+        <div className="text-center space-y-6 max-w-2xl">
+          <Image
+            src="/memes/This-Is-Fine-Dog-Fire-Meme-Sticker.webp"
+            alt="This is fine dog"
+            width={300}
+            height={170}
+            className="mx-auto rounded-lg shadow-lg"
+            priority 
+          />
+
+          <h1 className="text-4xl md:text-5xl font-bold text-red-500">
+            Welcome to Kya tumhe Naukri Milegi?
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300">
+            First, authenticate yourself to proceed...
+          </p>
+
+          <GoogleLoginButton />
+        </div>
+      </main>
+    );
+  }
+
   return (
+<>
     <main className="flex min-h-screen flex-col items-center justify-center p-12 md:p-24 bg-gray-900 text-white font-mono">
       <div className="text-center space-y-6 max-w-2xl">
         <Image
@@ -49,6 +94,10 @@ export default function Home() {
           (Psst... real hackers... check something to get ahead!)
         </p>
       </div>
+      <Link href="/leaderboard" className="inline-block mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">
+        View Leaderboard 🏆
+      </Link>
     </main>
+    </>
   );
 }

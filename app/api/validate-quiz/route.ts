@@ -1,8 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
+import { createWinner, addPathCompletion, createQuizAttempt, Collections, PATH_POINTS, Winner } from '@/lib/schemas';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+
 
 export async function POST(req: NextRequest) {
   try {
+    // Get the session from better-auth
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    // Check if user is authenticated with Google
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { passed: false, error: 'Unauthorized. Please log in with Google first.' },
+        { status: 401 }
+      );
+    }
+
+    const email = session.user.email;
     const { selected, name } = await req.json();
 
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -58,15 +76,62 @@ export async function POST(req: NextRequest) {
       try {
         const client = await clientPromise;
         const db = client.db('treasure_hunt');
+        const winnersCollection = db.collection<Winner>(Collections.WINNERS);
+        const pathName = 'ye-to-kar-looge-tum';
 
-        await db.collection('winners').insertOne({
-          name: name.trim(),
-          path: 'ye-to-kar-looge-tum',
-          createdAt: new Date(),
-        });
+        // Check if user already exists (by email)
+        const existingWinner = await winnersCollection.findOne({ email });
+
+        let winner: Winner;
+        const pathPoints = PATH_POINTS[pathName] ?? 0;
+
+        if (existingWinner) {
+          // Check if they already completed this path
+          const alreadyCompleted = existingWinner.completedPaths?.some(
+            (p) => p.path === pathName
+          );
+
+          if (!alreadyCompleted) {
+            // Add new path to existing winner
+            winner = addPathCompletion(existingWinner, pathName);
+            
+            // Update the document
+            await winnersCollection.updateOne(
+              { email },
+              { 
+                $set: { 
+                  completedPaths: winner.completedPaths,
+                  totalPoints: winner.totalPoints,
+                  lastUpdated: winner.lastUpdated
+                }
+              }
+            );
+          } else {
+            winner = existingWinner;
+          }
+        } else {
+          // Create new winner with first path
+          winner = createWinner(name, email, pathName);
+          await winnersCollection.insertOne(winner);
+        }
+
+        // Track the quiz attempt
+        const quizAttempt = createQuizAttempt(name, pathName, true, selected);
+        await db.collection(Collections.QUIZ_ATTEMPTS).insertOne(quizAttempt);
+
       } catch (dbError) {
         console.error('Error saving winner to database:', dbError);
         // Still return passed as true, but log the error
+      }
+    } else {
+      // Track failed attempts (optional)
+      try {
+        const client = await clientPromise;
+        const db = client.db('treasure_hunt');
+        const quizAttempt = createQuizAttempt(name, 'ye-to-kar-looge-tum', false, selected);
+        await db.collection(Collections.QUIZ_ATTEMPTS).insertOne(quizAttempt);
+      } catch (dbError) {
+        console.error('Error saving quiz attempt to database:', dbError);
       }
     }
 

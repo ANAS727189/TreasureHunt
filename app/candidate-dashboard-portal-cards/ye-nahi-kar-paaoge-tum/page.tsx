@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,11 @@ const Page = () => {
       const data = await response.json();
 
       if (data.passed) {
-        setMessage('✅ Congratulations! Code verified successfully!');
+        setMessage('✅ Congratulations! Code verified successfully! Redirecting...');
+        // Redirect to winner page
+        setTimeout(() => {
+          router.push('/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/yay-i-got-the-job-in-MTV-haha?path=ye-nahi-kar-paaoge-tum');
+        }, 1500);
       } else {
         setMessage('❌ Invalid code. Please try again.');
       }
