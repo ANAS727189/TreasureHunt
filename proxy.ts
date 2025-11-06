@@ -14,14 +14,14 @@ export function proxy(request: NextRequest) {
 
   // Define winner paths that need extra validation
   const winnerPaths = [
-    "/candidate-dashboard-portal-cards/internship/mtNa+d12y+vE5Ia5c0NrYx7ZN69",
-    "/candidate-dashboard-portal-cards/apply/4wkcnaVUR4M8huJ83QVK+vlq2JFzCb7JC3zM6eX7",
-    "/candidate-dashboard-portal-cards/policy/2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4",
+    // "/candidate-dashboard-portal-cards/internship/mtNa+d12y+vE5Ia5c0NrYx7ZN69",
+    // "/candidate-dashboard-portal-cards/apply/4wkcnaVUR4M8huJ83QVK+vlq2JFzCb7JC3zM6eX7",
+    // "/candidate-dashboard-portal-cards/policy/2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4",
     "/candidate-dashboard-portal-cards/angry-hr-complaint/9YtPlItjptkvxnQvQsTI2rFjypoWCJLIU2mM5JL72z0",
     "/candidate-dashboard-portal-cards/stack/sperPc08OGbzTRXULDJ2DhMY5QJoFrh61YkUnN3f7w",
     "/candidate-dashboard-portal-cards/swag-store/mjJMkyU2qVHGsDGnQCI",
-    "/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/duRmg1oRmGn7Wtzwlmo4sMBKY8Qh2wSgm+MkbkPD/7M",
-    "/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng",
+    // "/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/duRmg1oRmGn7Wtzwlmo4sMBKY8Qh2wSgm+MkbkPD/7M",
+    // "/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng",
   ];
 
   // Check if current path is a protected path or starts with one
@@ -58,13 +58,13 @@ export const config = {
     "/dashboard/:path*",
     "/tu-nalla-hi-marega/:path*",
     // Winner routes
-    "/candidate-dashboard-portal-cards/internship/mtNa+d12y+vE5Ia5c0NrYx7ZN69/:path*",
-    "/candidate-dashboard-portal-cards/apply/4wkcnaVUR4M8huJ83QVK+vlq2JFzCb7JC3zM6eX7/:path*",
-    "/candidate-dashboard-portal-cards/policy/2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4/:path*",
+    // "/candidate-dashboard-portal-cards/internship/mtNa+d12y+vE5Ia5c0NrYx7ZN69/:path*",
+    // "/candidate-dashboard-portal-cards/apply/4wkcnaVUR4M8huJ83QVK+vlq2JFzCb7JC3zM6eX7/:path*",
+    // "/candidate-dashboard-portal-cards/policy/2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4/:path*",
     "/candidate-dashboard-portal-cards/angry-hr-complaint/9YtPlItjptkvxnQvQsTI2rFjypoWCJLIU2mM5JL72z0/:path*",
     "/candidate-dashboard-portal-cards/stack/sperPc08OGbzTRXULDJ2DhMY5QJoFrh61YkUnN3f7w/:path*",
     "/candidate-dashboard-portal-cards/swag-store/mjJMkyU2qVHGsDGnQCI/:path*",
-    "/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/duRmg1oRmGn7Wtzwlmo4sMBKY8Qh2wSgm+MkbkPD/7M/:path*",
-    "/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng/:path*",
+    // "/candidate-dashboard-portal-cards/ye-to-kar-looge-tum/duRmg1oRmGn7Wtzwlmo4sMBKY8Qh2wSgm+MkbkPD/7M/:path*",
+    // "/candidate-dashboard-portal-cards/ye-nahi-kar-paaoge-tum/iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng/:path*",
   ],
 };
