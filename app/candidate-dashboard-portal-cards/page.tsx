@@ -163,7 +163,7 @@ export default function Dashboard() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 md:p-12 bg-gray-100 text-gray-900 font-sans">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+      <div className="flex flex-col md:flex-row justify-between space-x-4 items-start md:items-center mb-4">
         <h1 className="text-4xl font-bold mb-4 md:mb-0">
           Candidate Dashboard
         </h1>
@@ -173,7 +173,7 @@ export default function Dashboard() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
           </span>
           <span className="text-red-700 font-semibold">
-            8 &apos;Urgent&apos; Tasks Pending
+            9 &apos;Urgent&apos; Tasks Pending
           </span>
         </div>
       </div>
@@ -217,28 +217,6 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards}
       </div>
-
-      <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
-        <p className="mb-2">
-          © 2025 Kya Naukri Milegi? Inc. All rights reserved. (No, not
-          really).
-        </p>
-        <div className="space-x-4">
-          <Link
-            href="/candidate-dashboard-portal-cards/demo-request"
-            className="text-blue-500 hover:text-blue-600 hover:underline"
-          >
-            Request a Demo
-          </Link>
-          <span>|</span>
-          <Link
-            href="/candidate-dashboard-portal-cards/annual-report" 
-            className="text-blue-500 hover:text-blue-600 hover:underline"
-          >
-            Download Annual Report (PDF, 50MB)
-          </Link>
-        </div>
-      </footer>
     </main>
   );
 }

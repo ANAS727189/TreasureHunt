@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export default function DashboardLayout({
   children,
@@ -40,6 +41,9 @@ export default function DashboardLayout({
               </Link>
             </div>
             <div className="flex items-center">
+              <Link href="/leaderboard" className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">
+                      View Leaderboard 🏆
+              </Link>
               <button
                 onClick={handleLogout}
                 className="ml-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -53,6 +57,7 @@ export default function DashboardLayout({
 
       {/* Main content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">{children}</main>
+      <Footer />
     </div>
   );
 }

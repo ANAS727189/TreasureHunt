@@ -38,9 +38,6 @@ export function GoogleLoginButton() {
         </svg>
         Sign in with Google
       </button>
-      <Link href="/leaderboard" className="inline-block mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors">
-        View Leaderboard 🏆
-      </Link>
       <p className="text-xs text-gray-500 italic">
         (You need to authenticate first to proceed)
       </p>

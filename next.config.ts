@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
         destination: '/tu-nalla-hi-marega',
         permanent: false,
       },
+      {
+        source: '/candidate-dashboard-portal-cards/legacy-site/archive/nalla-backup',
+        destination: '/tu-nalla-hi-marega',
+        permanent: false,
+      },
+      {
+        source: '/candidate-dashboard-portal-cards/phoenix-final-step',
+        destination: '/tu-nalla-hi-marega', 
+        permanent: false,
+      },
     ];
   },
 };
