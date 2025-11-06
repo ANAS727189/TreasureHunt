@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
-import { createWinner, addPathCompletion, createQuizAttempt, Collections, PATH_POINTS, Winner } from '@/lib/schemas';
+import { createQuizAttempt, Collections, PATH_POINTS, Winner } from '@/lib/schemas';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
@@ -38,6 +38,9 @@ export async function POST(req: NextRequest) {
       'q8-a',                 // Question 8: A is correct (should NOT be crossed)
     ];
 
+    // Use Set for O(1) lookup instead of Array O(n)
+    const correctAnswersSet = new Set(correctAnswers);
+
     const allOptions = [
       // Q1
       'q1-a', 'q1-b', 'q1-c', 'q1-d',
@@ -60,7 +63,7 @@ export async function POST(req: NextRequest) {
     let passed = true;
 
     for (const option of allOptions) {
-      const isCorrect = correctAnswers.includes(option);
+      const isCorrect = correctAnswersSet.has(option); // O(1) lookup
       const isCrossed = selected[option] === true;
 
       if (isCorrect && isCrossed) {
@@ -78,61 +81,59 @@ export async function POST(req: NextRequest) {
         const db = client.db('treasure_hunt');
         const winnersCollection = db.collection<Winner>(Collections.WINNERS);
         const pathName = 'ye-to-kar-looge-tum';
-
-        // Check if user already exists (by email)
-        const existingWinner = await winnersCollection.findOne({ email });
-
-        let winner: Winner;
         const pathPoints = PATH_POINTS[pathName] ?? 0;
 
-        if (existingWinner) {
-          // Check if they already completed this path
-          const alreadyCompleted = existingWinner.completedPaths?.some(
-            (p) => p.path === pathName
-          );
-
-          if (!alreadyCompleted) {
-            // Add new path to existing winner
-            winner = addPathCompletion(existingWinner, pathName);
-            
-            // Update the document
-            await winnersCollection.updateOne(
-              { email },
-              { 
-                $set: { 
-                  completedPaths: winner.completedPaths,
-                  totalPoints: winner.totalPoints,
-                  lastUpdated: winner.lastUpdated
-                }
+        // Use atomic operation to prevent race conditions
+        const result = await winnersCollection.findOneAndUpdate(
+          { 
+            email,
+            'completedPaths.path': { $ne: pathName }
+          },
+          {
+            $setOnInsert: {
+              name: name.trim(),
+              email: email.trim().toLowerCase(),
+              createdAt: new Date(),
+            },
+            $addToSet: {
+              completedPaths: {
+                path: pathName,
+                points: pathPoints,
+                completedAt: new Date(),
               }
-            );
-          } else {
-            winner = existingWinner;
+            },
+            $inc: { totalPoints: pathPoints },
+            $set: { lastUpdated: new Date() }
+          },
+          {
+            upsert: true,
+            returnDocument: 'after'
           }
-        } else {
-          // Create new winner with first path
-          winner = createWinner(name, email, pathName);
-          await winnersCollection.insertOne(winner);
-        }
+        );
 
-        // Track the quiz attempt
+        // Track successful quiz attempt (non-blocking)
         const quizAttempt = createQuizAttempt(name, pathName, true, selected);
-        await db.collection(Collections.QUIZ_ATTEMPTS).insertOne(quizAttempt);
+        db.collection(Collections.QUIZ_ATTEMPTS).insertOne(quizAttempt)
+          .catch(err => console.error('Error saving quiz attempt:', err));
+
+        // Invalidate cache (non-blocking)
+        if (result) {
+          const { CacheManager } = await import('@/lib/cache');
+          CacheManager.invalidateLeaderboard()
+            .catch(err => console.error('Error invalidating cache:', err));
+        }
 
       } catch (dbError) {
         console.error('Error saving winner to database:', dbError);
         // Still return passed as true, but log the error
       }
     } else {
-      // Track failed attempts (optional)
-      try {
-        const client = await clientPromise;
+      // Track failed attempts in background (non-blocking)
+      clientPromise.then(async (client) => {
         const db = client.db('treasure_hunt');
         const quizAttempt = createQuizAttempt(name, 'ye-to-kar-looge-tum', false, selected);
         await db.collection(Collections.QUIZ_ATTEMPTS).insertOne(quizAttempt);
-      } catch (dbError) {
-        console.error('Error saving quiz attempt to database:', dbError);
-      }
+      }).catch(err => console.error('Error saving failed quiz attempt:', err));
     }
 
     return NextResponse.json({ passed });
