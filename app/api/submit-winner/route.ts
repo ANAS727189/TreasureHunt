@@ -21,6 +21,14 @@ export async function POST(request: Request) {
 
     const { name, path } = await request.json();
 
+    // Validate that the path exists in PATH_POINTS (only allow valid paths)
+    if (!path || !(path in PATH_POINTS)) {
+      return NextResponse.json(
+        { error: 'Invalid path. This path is not recognized.' },
+        { status: 400 }
+      );
+    }
+
     // Extract email from session
     const email = session.user.email;
 

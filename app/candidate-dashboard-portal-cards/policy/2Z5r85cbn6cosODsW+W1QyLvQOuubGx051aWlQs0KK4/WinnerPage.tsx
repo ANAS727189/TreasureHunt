@@ -3,6 +3,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { extractValidPath } from "@/lib/path-utils";
 
 function WinnerPage() {
   const [name, setName] = useState("");
@@ -33,7 +34,7 @@ function WinnerPage() {
       return;
     }
 
-    const path = searchParams.get("path");
+    const path = extractValidPath(searchParams.get("path"));
 
     const res = await fetch("/api/submit-winner", {
       method: "POST",

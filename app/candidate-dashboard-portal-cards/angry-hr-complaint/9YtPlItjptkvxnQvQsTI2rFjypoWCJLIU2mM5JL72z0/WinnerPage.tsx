@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { extractValidPath } from '@/lib/path-utils';
 
 function WinnerPage() {
   const [name, setName] = useState('');
@@ -11,7 +12,7 @@ function WinnerPage() {
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const path = searchParams.get('path');
+  const path = extractValidPath(searchParams.get('path'));
 
   useEffect(() => {
   if (typeof window === 'undefined') return;
@@ -35,7 +36,7 @@ function WinnerPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         name: name.trim(),
-        path: path || 'unknown'
+        path: path
       }),
     });
 

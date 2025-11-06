@@ -3,13 +3,14 @@
 import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { extractValidPath } from '@/lib/path-utils';
 
 function WinnerPage() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const searchParams = useSearchParams();
-  const path = searchParams.get('path');
+  const path = extractValidPath(searchParams.get('path'));
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
