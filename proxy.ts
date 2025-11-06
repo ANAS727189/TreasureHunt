@@ -31,10 +31,20 @@ export function proxy(request: NextRequest) {
   const isWinnerRoute = winnerPaths.some((path) =>
     currentPath.startsWith(path)
   );
+
+  // Winner routes also require authentication (they're under protected paths)
+  if (isWinnerRoute && !authToken) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Other protected routes require authentication
   if (isProtectedRoute && !authToken) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-  if (isWinnerRoute) {
+
+  // If accessing winner route with auth, let the page component handle puzzle validation
+  if (isWinnerRoute && authToken) {
+    // The page components should check for proper puzzle completion from localStorage
     return NextResponse.next();
   }
 
