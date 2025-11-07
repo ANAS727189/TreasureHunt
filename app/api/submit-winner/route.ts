@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
-import { createWinner, addPathCompletion, validateWinner, Collections, PATH_POINTS, Winner } from '@/lib/schemas';
+import { Collections, PATH_POINTS, Winner } from '@/lib/schemas';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { CacheManager } from '@/lib/cache';
 
 export async function POST(request: Request) {
   try {
@@ -30,77 +31,65 @@ export async function POST(request: Request) {
     }
 
     // Extract email from session
-    const email = session.user.email;
+    const email = session.user.email.trim().toLowerCase();
+    const pathPoints = PATH_POINTS[path] ?? 0;
 
     const client = await clientPromise;
     const db = client.db('treasure_hunt');
     const winnersCollection = db.collection<Winner>(Collections.WINNERS);
 
-    // Check if user already exists (by email)
-    const existingWinner = await winnersCollection.findOne({ email });
-
-    let winner: Winner;
-
-    if (existingWinner) {
-      // User exists - check if they already completed this path
-      const alreadyCompleted = existingWinner.completedPaths?.some(
-        (p) => p.path === path
-      );
-
-      if (alreadyCompleted) {
-        return NextResponse.json(
-          { 
-            message: 'You have already completed this path!',
-            alreadyCompleted: true,
-            totalPoints: existingWinner.totalPoints,
-            completedPaths: existingWinner.completedPaths
-          },
-          { status: 200 }
-        );
-      }
-
-      // Add new path to existing winner
-      winner = addPathCompletion(existingWinner, path);
-      
-      // Update the document
-      await winnersCollection.updateOne(
-        { email },
-        { 
-          $set: { 
-            completedPaths: winner.completedPaths,
-            totalPoints: winner.totalPoints,
-            lastUpdated: winner.lastUpdated
+    // Use atomic operation with $addToSet to prevent race conditions
+    const result = await winnersCollection.findOneAndUpdate(
+      { 
+        email,
+        'completedPaths.path': { $ne: path }  // Only update if path NOT completed
+      },
+      {
+        $setOnInsert: {
+          name: name.trim(),
+          email: email,
+          createdAt: new Date(),
+        },
+        $addToSet: {
+          completedPaths: {
+            path: path.trim(),
+            points: pathPoints,
+            completedAt: new Date(),
           }
-        }
-      );
-    } else {
-      // Create new winner with first path
-      winner = createWinner(name, email, path);
-
-      // Validate winner data
-      const validation = validateWinner(winner);
-      if (!validation.valid) {
-        return NextResponse.json(
-          { error: 'Validation failed', details: validation.errors },
-          { status: 400 }
-        );
+        },
+        $inc: { totalPoints: pathPoints },
+        $set: { lastUpdated: new Date() }
+      },
+      {
+        upsert: true,
+        returnDocument: 'after'
       }
+    );
 
-      // Insert new winner
-      await winnersCollection.insertOne(winner);
+    if (!result) {
+      // Path already completed - fetch current data
+      const existingWinner = await winnersCollection.findOne({ email });
+      return NextResponse.json(
+        { 
+          message: 'You have already completed this path!',
+          alreadyCompleted: true,
+          totalPoints: existingWinner?.totalPoints || 0,
+          completedPaths: existingWinner?.completedPaths || []
+        },
+        { status: 200 }
+      );
     }
 
-    // Get points for this path
-    const pathPoints = PATH_POINTS[path] ?? 0;
-
+    // Invalidate cache after successful path completion
+    await CacheManager.invalidateLeaderboard();
 
     return NextResponse.json(
       { 
         message: 'Path completed! Points added to your total!', 
         email: email,
         pathPoints: pathPoints,
-        totalPoints: winner.totalPoints,
-        completedPaths: winner.completedPaths.length
+        totalPoints: result.totalPoints,
+        completedPaths: result.completedPaths.length
       },
       { status: 200 }
     );
