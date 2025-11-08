@@ -5,6 +5,11 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { extractValidPath } from "@/lib/path-utils";
 
+// Hash to path mapping - must match backend
+const PATH_HASH_MAPPING: Record<string, string> = {
+  '2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4': 'policy',
+};
+
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -36,6 +41,18 @@ function WinnerPage() {
     }
     return '';
   };
+
+  // Validate hash matches path on component mount
+  useEffect(() => {
+    const hash = getHashFromUrl();
+    const expectedPath = PATH_HASH_MAPPING[hash];
+    const path = extractValidPath(searchParams.get("path"));
+    
+    if (expectedPath && expectedPath !== path) {
+      alert('Nice try! But you need to solve the puzzle first. 😏');
+      router.push('/candidate-dashboard-portal-cards');
+    }
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

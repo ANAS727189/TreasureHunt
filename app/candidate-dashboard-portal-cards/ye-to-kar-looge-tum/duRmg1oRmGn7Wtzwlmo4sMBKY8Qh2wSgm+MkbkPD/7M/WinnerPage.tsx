@@ -1,9 +1,14 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, FormEvent, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { extractValidPath } from '@/lib/path-utils';
+
+// Hash to path mapping - must match backend
+const PATH_HASH_MAPPING: Record<string, string> = {
+  '7M': 'ye-to-kar-looge-tum',
+};
 
 function WinnerPage() {
   const [name, setName] = useState('');
@@ -11,6 +16,7 @@ function WinnerPage() {
   const [submitted, setSubmitted] = useState(false);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const path = extractValidPath(searchParams.get('path'));
 
   // Extract hash from the current URL path
@@ -22,6 +28,17 @@ function WinnerPage() {
     }
     return '';
   };
+
+  // Validate hash matches path on component mount
+  useEffect(() => {
+    const hash = getHashFromUrl();
+    const expectedPath = PATH_HASH_MAPPING[hash];
+    
+    if (expectedPath && expectedPath !== path) {
+      alert('Nice try! But you need to solve the puzzle first. 😏');
+      router.push('/candidate-dashboard-portal-cards');
+    }
+  }, [path, router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

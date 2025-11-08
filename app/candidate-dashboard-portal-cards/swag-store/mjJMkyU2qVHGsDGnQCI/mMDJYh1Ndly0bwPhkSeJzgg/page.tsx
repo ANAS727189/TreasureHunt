@@ -4,6 +4,11 @@ import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+// Hash to path mapping - must match backend
+const PATH_HASH_MAPPING: Record<string, string> = {
+  'mMDJYh1Ndly0bwPhkSeJzgg': 'swag-store',
+};
+
 function WinnerPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -35,6 +40,18 @@ function WinnerPage() {
     }
     return '';
   };
+
+  // Validate hash matches path on component mount
+  useEffect(() => {
+    const hash = getHashFromUrl();
+    const expectedPath = PATH_HASH_MAPPING[hash];
+    const path = "swag-store"; // This path is hardcoded in this component
+    
+    if (expectedPath && expectedPath !== path) {
+      alert('Nice try! But you need to solve the puzzle first. 😏');
+      router.push('/candidate-dashboard-portal-cards');
+    }
+  }, [router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
