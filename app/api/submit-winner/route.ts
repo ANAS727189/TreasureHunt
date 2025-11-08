@@ -38,27 +38,44 @@ export async function POST(request: Request) {
     const db = client.db('treasure_hunt');
     const winnersCollection = db.collection<Winner>(Collections.WINNERS);
 
-    // Use atomic operation with $addToSet to prevent race conditions
+    // Check if path already completed
+    const existingWinner = await winnersCollection.findOne({
+      email,
+      'completedPaths.path': path
+    });
+
+    if (existingWinner) {
+      return NextResponse.json(
+        { 
+          message: 'You have already completed this path!',
+          alreadyCompleted: true,
+          totalPoints: existingWinner.totalPoints || 0,
+          completedPaths: existingWinner.completedPaths || []
+        },
+        { status: 200 }
+      );
+    }
+
+    // Add the new path completion
     const result = await winnersCollection.findOneAndUpdate(
-      { 
-        email,
-        'completedPaths.path': { $ne: path }  // Only update if path NOT completed
-      },
+      { email },
       {
         $setOnInsert: {
-          name: name.trim(),
-          email: email,
-          createdAt: new Date(),
+          email,
+          createdAt: new Date()
         },
-        $addToSet: {
+        $set: {
+          name: name.trim(),
+          lastUpdated: new Date()
+        },
+        $push: {
           completedPaths: {
             path: path.trim(),
             points: pathPoints,
-            completedAt: new Date(),
+            completedAt: new Date()
           }
         },
-        $inc: { totalPoints: pathPoints },
-        $set: { lastUpdated: new Date() }
+        $inc: { totalPoints: pathPoints }
       },
       {
         upsert: true,
@@ -67,25 +84,19 @@ export async function POST(request: Request) {
     );
 
     if (!result) {
-      // Path already completed - fetch current data
-      const existingWinner = await winnersCollection.findOne({ email });
       return NextResponse.json(
-        { 
-          message: 'You have already completed this path!',
-          alreadyCompleted: true,
-          totalPoints: existingWinner?.totalPoints || 0,
-          completedPaths: existingWinner?.completedPaths || []
-        },
-        { status: 200 }
+        { error: 'Could not update or create winner entry.' },
+        { status: 500 }
       );
     }
+
 
     // Invalidate cache after successful path completion
     await CacheManager.invalidateLeaderboard();
 
     return NextResponse.json(
       { 
-        message: 'Path completed! Points added to your total!', 
+        message: 'Path completed! Points added to your total!',
         email: email,
         pathPoints: pathPoints,
         totalPoints: result.totalPoints,
