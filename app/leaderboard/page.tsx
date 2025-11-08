@@ -1,9 +1,12 @@
-import { Database } from '@/lib/database';
+import { CacheManager } from '@/lib/cache';
 import Link from 'next/link';
+
+// Enable ISR with 60 second revalidation
+export const revalidate = 60;
 
 async function getLeaderboard() {
   try {
-    const leaders = await Database.getLeaderboard(50); // Top 50 users
+    const leaders = await CacheManager.getLeaderboard(50); // Top 50 users with caching
     return leaders;
   } catch (error) {
     console.error('Error fetching leaderboard:', error);
