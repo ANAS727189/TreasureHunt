@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, path } = await request.json();
+    const { name, path, hash } = await request.json();
 
     // Validate that the path exists in PATH_POINTS (only allow valid paths)
     if (!path || !(path in PATH_POINTS)) {
@@ -28,6 +28,20 @@ export async function POST(request: Request) {
         { error: 'Invalid path. This path is not recognized.' },
         { status: 400 }
       );
+    }
+
+    // Security: Validate that the hash matches the path
+    // This prevents users from changing ?path= parameter in URL to bypass puzzles
+    if (hash) {
+      const { PATH_HASH_MAPPING } = await import('@/lib/schemas');
+      const expectedPath = PATH_HASH_MAPPING[hash];
+      
+      if (expectedPath && expectedPath !== path) {
+        return NextResponse.json(
+          { error: 'Path validation failed. Nice try, but you need to solve the puzzle!' },
+          { status: 403 }
+        );
+      }
     }
 
     // Extract email from session

@@ -27,6 +27,16 @@ function WinnerPage() {
     }
   }, [router]);
 
+  // Extract hash from the current URL path
+  const getHashFromUrl = () => {
+    if (typeof window !== 'undefined') {
+      const urlPath = window.location.pathname;
+      const segments = urlPath.split('/');
+      return segments[segments.length - 1] || '';
+    }
+    return '';
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (name.trim().length === 0) {
@@ -35,11 +45,12 @@ function WinnerPage() {
     }
 
     const path = extractValidPath(searchParams.get("path"));
+    const hash = getHashFromUrl();
 
     const res = await fetch("/api/submit-winner", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name.trim(), path }),
+      body: JSON.stringify({ name: name.trim(), path, hash: hash }),
     });
 
     const data = await res.json();

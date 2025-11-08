@@ -1,6 +1,22 @@
 import { ObjectId } from 'mongodb';
 
 /**
+ * Path Hash to Path Name Mapping
+ * Maps the unique hash in the URL to the actual path name
+ * This prevents users from changing ?path= query parameter to bypass puzzles
+ */
+export const PATH_HASH_MAPPING: Record<string, string> = {
+  'sperPc08OGbzTRXULDJ2DhMY5QJoFrh61YkUnN3f7w': 'stack',
+  '7M': 'ye-to-kar-looge-tum',
+  'iA1IH13bDvbqqo8qgZ9CB1wPyPTX+y2DqZrsVfaQQng': 'ye-nahi-kar-paaoge-tum',
+  'Xc': 'apply',
+  '9YtPlItjptkvxnQvQsTI2rFjypoWCJLIU2mM5JL72z0': 'angry-hr',
+  '2Z5r85cbn6cosODsW+W1QyLvQOuubGx051aWlQs0KK4': 'policy',
+  'mMDJYh1Ndly0bwPhkSeJzgg': 'swag-store',
+  'IpBzhutf7UlUgVc': 'internship',
+};
+
+/**
  * Path Points Mapping
  * Points awarded for completing each path (backend only)
  */
