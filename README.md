@@ -1,5 +1,5 @@
 
-# 🚀 Kya Naukri Milegi? - The "Official" Repo
+# Kya Naukri Milegi? - The "Official" Repo
 
 So... you found the GitHub repo. Clever.
 
@@ -7,7 +7,7 @@ What, did you expect to find an `answers.txt` file here?
 
 Welcome, hacker.
 
-## 🧐 About This "Project"
+## About This "Project"
 
 This project is a highly-complex, enterprise-grade, AI-driven, synergistic, Web 5.0 Applicant Tracking System (ATS)...
 
@@ -40,4 +40,3 @@ We designed this "application" specifically for smarty-pants people like you:
 -----
 
 ### Now go, and find that job.
-# TreasureHunt_V2
